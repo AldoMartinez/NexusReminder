@@ -1,0 +1,591 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4362CA5F228F6E8E00A70EA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4362CA5E228F6E8E00A70EA1 /* AppDelegate.swift */; };
+		4362CA61228F6E8E00A70EA1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4362CA60228F6E8E00A70EA1 /* ViewController.swift */; };
+		4362CA64228F6E8E00A70EA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4362CA62228F6E8E00A70EA1 /* Main.storyboard */; };
+		4362CA66228F6E8F00A70EA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4362CA65228F6E8F00A70EA1 /* Assets.xcassets */; };
+		4362CA69228F6E8F00A70EA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4362CA67228F6E8F00A70EA1 /* LaunchScreen.storyboard */; };
+		4362CA74228F6E9000A70EA1 /* Nexus_ReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4362CA73228F6E9000A70EA1 /* Nexus_ReminderTests.swift */; };
+		4362CA7F228F6E9000A70EA1 /* Nexus_ReminderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4362CA7E228F6E9000A70EA1 /* Nexus_ReminderUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4362CA70228F6E9000A70EA1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4362CA53228F6E8E00A70EA1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4362CA5A228F6E8E00A70EA1;
+			remoteInfo = "Nexus Reminder";
+		};
+		4362CA7B228F6E9000A70EA1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4362CA53228F6E8E00A70EA1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4362CA5A228F6E8E00A70EA1;
+			remoteInfo = "Nexus Reminder";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4362CA5B228F6E8E00A70EA1 /* Nexus Reminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nexus Reminder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4362CA5E228F6E8E00A70EA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4362CA60228F6E8E00A70EA1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4362CA63228F6E8E00A70EA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4362CA65228F6E8F00A70EA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4362CA68228F6E8F00A70EA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4362CA6A228F6E8F00A70EA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4362CA6F228F6E9000A70EA1 /* Nexus ReminderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Nexus ReminderTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4362CA73228F6E9000A70EA1 /* Nexus_ReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nexus_ReminderTests.swift; sourceTree = "<group>"; };
+		4362CA75228F6E9000A70EA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4362CA7A228F6E9000A70EA1 /* Nexus ReminderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Nexus ReminderUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4362CA7E228F6E9000A70EA1 /* Nexus_ReminderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nexus_ReminderUITests.swift; sourceTree = "<group>"; };
+		4362CA80228F6E9000A70EA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4362CA58228F6E8E00A70EA1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4362CA6C228F6E9000A70EA1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4362CA77228F6E9000A70EA1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4362CA52228F6E8E00A70EA1 = {
+			isa = PBXGroup;
+			children = (
+				4362CA5D228F6E8E00A70EA1 /* Nexus Reminder */,
+				4362CA72228F6E9000A70EA1 /* Nexus ReminderTests */,
+				4362CA7D228F6E9000A70EA1 /* Nexus ReminderUITests */,
+				4362CA5C228F6E8E00A70EA1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4362CA5C228F6E8E00A70EA1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4362CA5B228F6E8E00A70EA1 /* Nexus Reminder.app */,
+				4362CA6F228F6E9000A70EA1 /* Nexus ReminderTests.xctest */,
+				4362CA7A228F6E9000A70EA1 /* Nexus ReminderUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4362CA5D228F6E8E00A70EA1 /* Nexus Reminder */ = {
+			isa = PBXGroup;
+			children = (
+				4362CA5E228F6E8E00A70EA1 /* AppDelegate.swift */,
+				4362CA60228F6E8E00A70EA1 /* ViewController.swift */,
+				4362CA62228F6E8E00A70EA1 /* Main.storyboard */,
+				4362CA65228F6E8F00A70EA1 /* Assets.xcassets */,
+				4362CA67228F6E8F00A70EA1 /* LaunchScreen.storyboard */,
+				4362CA6A228F6E8F00A70EA1 /* Info.plist */,
+			);
+			path = "Nexus Reminder";
+			sourceTree = "<group>";
+		};
+		4362CA72228F6E9000A70EA1 /* Nexus ReminderTests */ = {
+			isa = PBXGroup;
+			children = (
+				4362CA73228F6E9000A70EA1 /* Nexus_ReminderTests.swift */,
+				4362CA75228F6E9000A70EA1 /* Info.plist */,
+			);
+			path = "Nexus ReminderTests";
+			sourceTree = "<group>";
+		};
+		4362CA7D228F6E9000A70EA1 /* Nexus ReminderUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4362CA7E228F6E9000A70EA1 /* Nexus_ReminderUITests.swift */,
+				4362CA80228F6E9000A70EA1 /* Info.plist */,
+			);
+			path = "Nexus ReminderUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4362CA5A228F6E8E00A70EA1 /* Nexus Reminder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4362CA83228F6E9000A70EA1 /* Build configuration list for PBXNativeTarget "Nexus Reminder" */;
+			buildPhases = (
+				4362CA57228F6E8E00A70EA1 /* Sources */,
+				4362CA58228F6E8E00A70EA1 /* Frameworks */,
+				4362CA59228F6E8E00A70EA1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Nexus Reminder";
+			productName = "Nexus Reminder";
+			productReference = 4362CA5B228F6E8E00A70EA1 /* Nexus Reminder.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4362CA6E228F6E9000A70EA1 /* Nexus ReminderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4362CA86228F6E9000A70EA1 /* Build configuration list for PBXNativeTarget "Nexus ReminderTests" */;
+			buildPhases = (
+				4362CA6B228F6E9000A70EA1 /* Sources */,
+				4362CA6C228F6E9000A70EA1 /* Frameworks */,
+				4362CA6D228F6E9000A70EA1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4362CA71228F6E9000A70EA1 /* PBXTargetDependency */,
+			);
+			name = "Nexus ReminderTests";
+			productName = "Nexus ReminderTests";
+			productReference = 4362CA6F228F6E9000A70EA1 /* Nexus ReminderTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		4362CA79228F6E9000A70EA1 /* Nexus ReminderUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4362CA89228F6E9000A70EA1 /* Build configuration list for PBXNativeTarget "Nexus ReminderUITests" */;
+			buildPhases = (
+				4362CA76228F6E9000A70EA1 /* Sources */,
+				4362CA77228F6E9000A70EA1 /* Frameworks */,
+				4362CA78228F6E9000A70EA1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4362CA7C228F6E9000A70EA1 /* PBXTargetDependency */,
+			);
+			name = "Nexus ReminderUITests";
+			productName = "Nexus ReminderUITests";
+			productReference = 4362CA7A228F6E9000A70EA1 /* Nexus ReminderUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4362CA53228F6E8E00A70EA1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "Aldo Aram Martinez Mireles";
+				TargetAttributes = {
+					4362CA5A228F6E8E00A70EA1 = {
+						CreatedOnToolsVersion = 10.2;
+					};
+					4362CA6E228F6E9000A70EA1 = {
+						CreatedOnToolsVersion = 10.2;
+						TestTargetID = 4362CA5A228F6E8E00A70EA1;
+					};
+					4362CA79228F6E9000A70EA1 = {
+						CreatedOnToolsVersion = 10.2;
+						TestTargetID = 4362CA5A228F6E8E00A70EA1;
+					};
+				};
+			};
+			buildConfigurationList = 4362CA56228F6E8E00A70EA1 /* Build configuration list for PBXProject "Nexus Reminder" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4362CA52228F6E8E00A70EA1;
+			productRefGroup = 4362CA5C228F6E8E00A70EA1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4362CA5A228F6E8E00A70EA1 /* Nexus Reminder */,
+				4362CA6E228F6E9000A70EA1 /* Nexus ReminderTests */,
+				4362CA79228F6E9000A70EA1 /* Nexus ReminderUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4362CA59228F6E8E00A70EA1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4362CA69228F6E8F00A70EA1 /* LaunchScreen.storyboard in Resources */,
+				4362CA66228F6E8F00A70EA1 /* Assets.xcassets in Resources */,
+				4362CA64228F6E8E00A70EA1 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4362CA6D228F6E9000A70EA1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4362CA78228F6E9000A70EA1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4362CA57228F6E8E00A70EA1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4362CA61228F6E8E00A70EA1 /* ViewController.swift in Sources */,
+				4362CA5F228F6E8E00A70EA1 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4362CA6B228F6E9000A70EA1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4362CA74228F6E9000A70EA1 /* Nexus_ReminderTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4362CA76228F6E9000A70EA1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4362CA7F228F6E9000A70EA1 /* Nexus_ReminderUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4362CA71228F6E9000A70EA1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4362CA5A228F6E8E00A70EA1 /* Nexus Reminder */;
+			targetProxy = 4362CA70228F6E9000A70EA1 /* PBXContainerItemProxy */;
+		};
+		4362CA7C228F6E9000A70EA1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4362CA5A228F6E8E00A70EA1 /* Nexus Reminder */;
+			targetProxy = 4362CA7B228F6E9000A70EA1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4362CA62228F6E8E00A70EA1 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4362CA63228F6E8E00A70EA1 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		4362CA67228F6E8F00A70EA1 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4362CA68228F6E8F00A70EA1 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4362CA81228F6E9000A70EA1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4362CA82228F6E9000A70EA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4362CA84228F6E9000A70EA1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAK9975C6W;
+				INFOPLIST_FILE = "Nexus Reminder/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "aldo.Nexus-Reminder";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4362CA85228F6E9000A70EA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAK9975C6W;
+				INFOPLIST_FILE = "Nexus Reminder/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "aldo.Nexus-Reminder";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4362CA87228F6E9000A70EA1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAK9975C6W;
+				INFOPLIST_FILE = "Nexus ReminderTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "aldo.Nexus-ReminderTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Nexus Reminder.app/Nexus Reminder";
+			};
+			name = Debug;
+		};
+		4362CA88228F6E9000A70EA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAK9975C6W;
+				INFOPLIST_FILE = "Nexus ReminderTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "aldo.Nexus-ReminderTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Nexus Reminder.app/Nexus Reminder";
+			};
+			name = Release;
+		};
+		4362CA8A228F6E9000A70EA1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAK9975C6W;
+				INFOPLIST_FILE = "Nexus ReminderUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "aldo.Nexus-ReminderUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Nexus Reminder";
+			};
+			name = Debug;
+		};
+		4362CA8B228F6E9000A70EA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GAK9975C6W;
+				INFOPLIST_FILE = "Nexus ReminderUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "aldo.Nexus-ReminderUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Nexus Reminder";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4362CA56228F6E8E00A70EA1 /* Build configuration list for PBXProject "Nexus Reminder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4362CA81228F6E9000A70EA1 /* Debug */,
+				4362CA82228F6E9000A70EA1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4362CA83228F6E9000A70EA1 /* Build configuration list for PBXNativeTarget "Nexus Reminder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4362CA84228F6E9000A70EA1 /* Debug */,
+				4362CA85228F6E9000A70EA1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4362CA86228F6E9000A70EA1 /* Build configuration list for PBXNativeTarget "Nexus ReminderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4362CA87228F6E9000A70EA1 /* Debug */,
+				4362CA88228F6E9000A70EA1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4362CA89228F6E9000A70EA1 /* Build configuration list for PBXNativeTarget "Nexus ReminderUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4362CA8A228F6E9000A70EA1 /* Debug */,
+				4362CA8B228F6E9000A70EA1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4362CA53228F6E8E00A70EA1 /* Project object */;
+}
