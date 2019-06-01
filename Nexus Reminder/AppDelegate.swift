@@ -15,7 +15,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Si el usuario esta logeado, lo mando a la pantalla de actividades
+        if UserDefaults.standard.bool(forKey: "userLogin") {
+            let vc = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "TabBarMain")
+            let share = UIApplication.shared.delegate as? AppDelegate
+            share?.window?.rootViewController = vc
+        }
         // Override point for customization after application launch.
+        let navigationBar = UINavigationBar.appearance()
+        navigationBar.barTintColor = UIColor(red: 5/255, green: 57/255, blue: 110/255, alpha: 1)
+        navigationBar.isTranslucent = false
+        navigationBar.tintColor = .white
+        navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         return true
     }
 
