@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController, UITextFieldDelegate {
 
@@ -16,6 +17,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnView)))
         setupInputFields()
     }
+    
+    // MARK: Properties
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
     
     // MARK: Outlets
     @IBOutlet weak var matriculaTextField: UITextField!
@@ -89,6 +94,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 do {
                     // Convierte el response de la API en un objeto
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
                     if let actividadesUsuario = json as? [[String: Any]] {
                         var allActividades: [Actividad] = []
                         // Se recorren las materias para buscar si hay actividades pendientes
@@ -97,8 +103,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
                                 if actividades.count != 0 {
                                     // Si hay actividad pendiente, se crea un Actividad
                                     for actividad in actividades {
-                                        let nuevaActividad = Actividad(nombreActividad: actividad["tarea"] ?? "Desconocida", fechaLimite: actividad["fecha_limite"] ?? "--", datosMateria: materia)
-                                        allActividades.append(nuevaActividad)
+                                        let nuevaActividad = Actividad(context: self.context)
+                                        nuevaActividad.completada = false
+                                        nuevaActividad.materia = materia["materia"] as? String ?? "Materia desconocida"
+                                        nuevaActividad.nombre = actividad["tarea"]
+                                        if let fechaNexus = actividad["fecha_limite"] {
+                                            nuevaActividad.fecha_limite = self.convertToDate(fechaNexus: fechaNexus)
+                                        }
+                                        print(nuevaActividad)
+                                        self.saveActividad()
                                     }
                                 }
                             }
@@ -108,7 +121,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         } else {
                             print(allActividades)
                         }
-
                     }
                 } catch {
                     print(error)
@@ -158,6 +170,25 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    // MARK: Métodos para la manipulación del modelo de datos
+    // Guarda la actividad en Core Data
+    func saveActividad() {
+        do {
+            try self.context.save()
+        } catch {
+            print("Ocurrió un error al guardar el Context: \(error)")
+        }
+    }
+    // Convierte la fecha limite de nexus en formato Date
+    func convertToDate(fechaNexus: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "es_MX")
+        formatter.dateFormat = "MMMM d, HH:mm 'hrs.'"
+        
+        guard let dateNexus = formatter.date(from: fechaNexus) else { return Date() }
+        return dateNexus
     }
 }
 

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4302335622A2139B00F61C2B /* DesignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302335522A2139B00F61C2B /* DesignView.swift */; };
 		4302335822A21AC900F61C2B /* ActividadesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302335722A21AC900F61C2B /* ActividadesCell.swift */; };
-		4302335A22A21EF900F61C2B /* Actividad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302335922A21EF900F61C2B /* Actividad.swift */; };
 		4302335C22A2269D00F61C2B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302335B22A2269D00F61C2B /* Constants.swift */; };
 		4302335E22A228DE00F61C2B /* ConfiguracionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302335D22A228DE00F61C2B /* ConfiguracionController.swift */; };
 		4302336022A22E0600F61C2B /* Funciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302335F22A22E0600F61C2B /* Funciones.swift */; };
@@ -20,6 +19,7 @@
 		4362CA69228F6E8F00A70EA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4362CA67228F6E8F00A70EA1 /* LaunchScreen.storyboard */; };
 		4362CA74228F6E9000A70EA1 /* Nexus_ReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4362CA73228F6E9000A70EA1 /* Nexus_ReminderTests.swift */; };
 		4362CA7F228F6E9000A70EA1 /* Nexus_ReminderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4362CA7E228F6E9000A70EA1 /* Nexus_ReminderUITests.swift */; };
+		4395A4C922A2F3AF00F65239 /* ActividadesModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4395A4C722A2F3AF00F65239 /* ActividadesModel.xcdatamodeld */; };
 		43BB451F22A0E82500EF0E12 /* ActividadesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BB451E22A0E82500EF0E12 /* ActividadesController.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,7 +43,6 @@
 /* Begin PBXFileReference section */
 		4302335522A2139B00F61C2B /* DesignView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignView.swift; sourceTree = "<group>"; };
 		4302335722A21AC900F61C2B /* ActividadesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesCell.swift; sourceTree = "<group>"; };
-		4302335922A21EF900F61C2B /* Actividad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actividad.swift; sourceTree = "<group>"; };
 		4302335B22A2269D00F61C2B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4302335D22A228DE00F61C2B /* ConfiguracionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguracionController.swift; sourceTree = "<group>"; };
 		4302335F22A22E0600F61C2B /* Funciones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Funciones.swift; sourceTree = "<group>"; };
@@ -60,6 +59,7 @@
 		4362CA7A228F6E9000A70EA1 /* Nexus ReminderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Nexus ReminderUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4362CA7E228F6E9000A70EA1 /* Nexus_ReminderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nexus_ReminderUITests.swift; sourceTree = "<group>"; };
 		4362CA80228F6E9000A70EA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4395A4C822A2F3AF00F65239 /* ActividadesModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ActividadesModel.xcdatamodel; sourceTree = "<group>"; };
 		43BB451E22A0E82500EF0E12 /* ActividadesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,18 +112,12 @@
 			isa = PBXGroup;
 			children = (
 				4362CA5E228F6E8E00A70EA1 /* AppDelegate.swift */,
-				4362CA60228F6E8E00A70EA1 /* Login.swift */,
-				4362CA62228F6E8E00A70EA1 /* Main.storyboard */,
+				4395A4CD22A2F44100F65239 /* Views */,
+				4395A4CC22A2F40900F65239 /* Controllers */,
+				4395A4CA22A2F3C200F65239 /* Data Model */,
+				4395A4CB22A2F3F900F65239 /* Tools */,
 				4362CA65228F6E8F00A70EA1 /* Assets.xcassets */,
-				4362CA67228F6E8F00A70EA1 /* LaunchScreen.storyboard */,
 				4362CA6A228F6E8F00A70EA1 /* Info.plist */,
-				43BB451E22A0E82500EF0E12 /* ActividadesController.swift */,
-				4302335522A2139B00F61C2B /* DesignView.swift */,
-				4302335722A21AC900F61C2B /* ActividadesCell.swift */,
-				4302335922A21EF900F61C2B /* Actividad.swift */,
-				4302335B22A2269D00F61C2B /* Constants.swift */,
-				4302335D22A228DE00F61C2B /* ConfiguracionController.swift */,
-				4302335F22A22E0600F61C2B /* Funciones.swift */,
 			);
 			path = "Nexus Reminder";
 			sourceTree = "<group>";
@@ -144,6 +138,44 @@
 				4362CA80228F6E9000A70EA1 /* Info.plist */,
 			);
 			path = "Nexus ReminderUITests";
+			sourceTree = "<group>";
+		};
+		4395A4CA22A2F3C200F65239 /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				4395A4C722A2F3AF00F65239 /* ActividadesModel.xcdatamodeld */,
+				4302335B22A2269D00F61C2B /* Constants.swift */,
+				4302335722A21AC900F61C2B /* ActividadesCell.swift */,
+			);
+			path = "Data Model";
+			sourceTree = "<group>";
+		};
+		4395A4CB22A2F3F900F65239 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				4302335522A2139B00F61C2B /* DesignView.swift */,
+				4302335F22A22E0600F61C2B /* Funciones.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		4395A4CC22A2F40900F65239 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4362CA60228F6E8E00A70EA1 /* Login.swift */,
+				43BB451E22A0E82500EF0E12 /* ActividadesController.swift */,
+				4302335D22A228DE00F61C2B /* ConfiguracionController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4395A4CD22A2F44100F65239 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4362CA62228F6E8E00A70EA1 /* Main.storyboard */,
+				4362CA67228F6E8F00A70EA1 /* LaunchScreen.storyboard */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,7 +313,7 @@
 				43BB451F22A0E82500EF0E12 /* ActividadesController.swift in Sources */,
 				4362CA61228F6E8E00A70EA1 /* Login.swift in Sources */,
 				4302335E22A228DE00F61C2B /* ConfiguracionController.swift in Sources */,
-				4302335A22A21EF900F61C2B /* Actividad.swift in Sources */,
+				4395A4C922A2F3AF00F65239 /* ActividadesModel.xcdatamodeld in Sources */,
 				4302335C22A2269D00F61C2B /* Constants.swift in Sources */,
 				4302335822A21AC900F61C2B /* ActividadesCell.swift in Sources */,
 				4302336022A22E0600F61C2B /* Funciones.swift in Sources */,
@@ -616,6 +648,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4395A4C722A2F3AF00F65239 /* ActividadesModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4395A4C822A2F3AF00F65239 /* ActividadesModel.xcdatamodel */,
+			);
+			currentVersion = 4395A4C822A2F3AF00F65239 /* ActividadesModel.xcdatamodel */;
+			path = ActividadesModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4362CA53228F6E8E00A70EA1 /* Project object */;
 }

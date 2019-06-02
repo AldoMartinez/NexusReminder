@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ActividadesController: UITableViewController {
     
@@ -15,15 +16,33 @@ class ActividadesController: UITableViewController {
         bottomView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         //actividades = UserDefaults.standard.array(forKey: "actividades") as! [Actividad]
+        cargarActividades()
     }
     // MARK: Variables
     var actividades: [Actividad] = []
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     // MARK: Outlets
     @IBOutlet weak var bottomView: UIView!
+
     
-//    let act = Actividad(materia: "Matematicas", actividad: "Ejercicio 1", fechaLimite: "22 de mayo del 2020")
-//    let act2 = Actividad(materia: "Seguridad y criptografía", actividad: "Actividad fundamental que tiene que ser un ensayo con un limite de 3 cuartillas", fechaLimite: "22 de mayo del 2020")
-//    var actividades: [Actividad] = []
+    // MARK: Funciones
+    func cargarActividades() {
+        let request: NSFetchRequest<Actividad> = Actividad.fetchRequest()
+        do {
+            self.actividades = try self.context.fetch(request)
+        } catch {
+            print("Error al cargar las actividades: \(error)")
+        }
+    }
+    
+    func convertNexusDateToString(fecha: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "es_MX")
+        formatter.dateFormat = "MMMM d, HH:mm 'hrs.'"
+        
+        let dateNexus = formatter.string(from: fecha)
+        return dateNexus
+    }
     
     // MARK: Funciones del table view
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -39,8 +58,11 @@ class ActividadesController: UITableViewController {
         cell.contentView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         
         cell.materiaLabel.text = actividades[indexPath.row].materia
-        cell.actividadLabel.text = actividades[indexPath.row].actividad
-        cell.fechaLimiteLabel.text = actividades[indexPath.row].fechaLimite
+        cell.actividadLabel.text = actividades[indexPath.row].nombre
+        if let fechaLimite = actividades[indexPath.row].fecha_limite {
+            cell.fechaLimiteLabel.text = convertNexusDateToString(fecha: fechaLimite)
+        }
+        
         cell.recuerdoDiaLabel.text = "Te quedan 3 dias para subir la tarea"
         
         // Da estilo al recuerdoDiaLabel
