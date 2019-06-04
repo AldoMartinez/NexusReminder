@@ -29,18 +29,26 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Actions
     @IBAction func LoginButton(_ sender: UIButton) {
-        obtenerActividades(matricula: matriculaTextField.text!, contrasena: contrasenaTextField.text!)
-        performSegue(withIdentifier: "tabBarSegue", sender: self)
-        UserDefaults.standard.set(true, forKey: "userLogin")
-//        matriculaTextField.text = ""
-//        contrasenaTextField.text = ""
-//        loginButton.isEnabled = false
+        let status: Int = obtenerActividades(matricula: matriculaTextField.text!, contrasena: contrasenaTextField.text!)
+        switch status {
+        case 0:
+            print("Matricula o contraseña incorrectas")
+            resetInputFields()
+        case 1:
+            print("La contraseña no puede tener espacios")
+            resetInputFields()
+        default:
+            performSegue(withIdentifier: "tabBarSegue", sender: self)
+            UserDefaults.standard.set(true, forKey: "userLogin")
+        }
+        
+        
     }
     
     // MAR
     // Funcion que hace el request a la API
-    func obtenerActividades(matricula: String, contrasena: String) {
-        
+    func obtenerActividades(matricula: String, contrasena: String) -> Int {
+        var statusCode: Int = 2
         let datosPrueba = [
             ["actividades_pendientes" : [], "materia" : "Movilidad Academica"],
             ["materia" : "Redes neuronales", "actividades_pendientes" : [
@@ -65,9 +73,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         let base = "http://18.191.89.218/nexusApi/"
         let separador = "nexusApiAldo"
-        let url = base + matricula + separador + contrasena
+        var url = base + matricula + separador + contrasena
+        url = url.trimmingCharacters(in: .whitespacesAndNewlines)
         print(url)
-        let urlRequest = URL(string: url)!
+        guard let urlRequest = URL(string: url) else {
+            return 1
+        }
 //        if let actividadesUsuario = datosPrueba as? [[String: Any]] {
 //            var allActividades: [Actividad] = []
 //            // Se recorren las materias para buscar si hay actividades pendientes
@@ -90,36 +101,36 @@ class ViewController: UIViewController, UITextFieldDelegate {
 //            }
 //        }
         let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+
             if let data = data {
                 do {
-                    // Convierte el response de la API en un objeto
-                    let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print(json)
-                    if let actividadesUsuario = json as? [[String: Any]] {
-                        var allActividades: [Actividad] = []
-                        // Se recorren las materias para buscar si hay actividades pendientes
-                        for materia in actividadesUsuario {
-                            if let actividades = materia["actividades_pendientes"] as? [[String:String]]{
-                                if actividades.count != 0 {
-                                    // Si hay actividad pendiente, se crea un Actividad
-                                    for actividad in actividades {
-                                        let nuevaActividad = Actividad(context: self.context)
-                                        nuevaActividad.completada = false
-                                        nuevaActividad.materia = materia["materia"] as? String ?? "Materia desconocida"
-                                        nuevaActividad.nombre = actividad["tarea"]
-                                        if let fechaNexus = actividad["fecha_limite"] {
-                                            nuevaActividad.fecha_limite = self.convertToDate(fechaNexus: fechaNexus)
+                    if let respuesta = String(data: data, encoding: .utf8) {
+                        // Verifica lo retornado por el servidor
+                        if respuesta != "Matricula o contraseña incorrecta" {
+                            let json = try JSONSerialization.jsonObject(with: data, options: [])
+                            if let actividadesUsuario = json as? [[String: Any]] {
+                                // Se recorren las materias para buscar si hay actividades pendientes
+                                for materia in actividadesUsuario {
+                                    if let actividades = materia["actividades_pendientes"] as? [[String:String]]{
+                                        if actividades.count != 0 {
+                                            // Si hay actividad pendiente, se crea un Actividad
+                                            for actividad in actividades {
+                                                let nuevaActividad = Actividad(context: self.context)
+                                                nuevaActividad.completada = false
+                                                nuevaActividad.materia = materia["materia"] as? String ?? "Materia desconocida"
+                                                nuevaActividad.nombre = actividad["tarea"]
+                                                if let fechaNexus = actividad["fecha_limite"] {
+                                                    nuevaActividad.fecha_limite = self.convertToDate(fechaNexus: fechaNexus)
+                                                }
+                                                print(nuevaActividad)
+                                                Funciones().saveActividad()
+                                            }
                                         }
-                                        print(nuevaActividad)
-                                        self.saveActividad()
                                     }
                                 }
                             }
-                        }
-                        if allActividades.count == 0 {
-                            print("No tienes actividades pendientes")
                         } else {
-                            print(allActividades)
+                            statusCode = 0
                         }
                     }
                 } catch {
@@ -128,6 +139,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             }
         }
         task.resume()
+        return statusCode
     }
     @objc private func handleTextInputChange() {
         let isFormValid = matriculaTextField.text?.isEmpty == false && contrasenaTextField.text?.isEmpty == false
@@ -173,14 +185,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: Métodos para la manipulación del modelo de datos
-    // Guarda la actividad en Core Data
-    func saveActividad() {
-        do {
-            try self.context.save()
-        } catch {
-            print("Ocurrió un error al guardar el Context: \(error)")
-        }
-    }
     // Convierte la fecha limite de nexus en formato Date
     func convertToDate(fechaNexus: String) -> Date {
         let formatter = DateFormatter()

@@ -13,8 +13,13 @@ class ConfiguracionController: UITableViewController {
         super.viewDidLoad()
     }
     
+    // MARK: Properties
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     @IBAction func cerrarSesionButton(_ sender: UIButton) {
         UserDefaults.standard.set(false, forKey: "userLogin")
         Funciones().setRootControllerTVC(storyboardID: "loginController", controller: self)
+        Funciones().deleteActividades()
+        Funciones().saveActividad()
     }
 }
