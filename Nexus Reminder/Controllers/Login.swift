@@ -16,8 +16,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
         navigationController?.isNavigationBarHidden = true
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnView)))
         setupInputFields()
+        // Se agregra observadores para ejecutar los métodos de las vistas cuando aparecen los teclados
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
+    // MARK: Métodos para mover la vista cuando aparece y desparece el teclado
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else { return }
+        guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        let keyboardFrame = keyboardSize.cgRectValue
+        if self.view.frame.origin.y == 0 {
+            self.view.frame.origin.y -= keyboardFrame.height
+        }
+    }
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
     // MARK: Properties
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
@@ -29,25 +45,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Actions
     @IBAction func LoginButton(_ sender: UIButton) {
-        let status: Int = obtenerActividades(matricula: matriculaTextField.text!, contrasena: contrasenaTextField.text!)
-        switch status {
-        case 0:
-            print("Matricula o contraseña incorrectas")
-            resetInputFields()
-        case 1:
-            print("La contraseña no puede tener espacios")
-            resetInputFields()
-        default:
-            performSegue(withIdentifier: "tabBarSegue", sender: self)
-            UserDefaults.standard.set(true, forKey: "userLogin")
-        }
-        
-        
+        obtenerActividades(matricula: matriculaTextField.text!, contrasena: contrasenaTextField.text!)
     }
     
-    // MAR
+    // MARK: Funciones
     // Funcion que hace el request a la API
-    func obtenerActividades(matricula: String, contrasena: String) -> Int {
+    func obtenerActividades(matricula: String, contrasena: String) {
         var statusCode: Int = 2
         let datosPrueba = [
             ["actividades_pendientes" : [], "materia" : "Movilidad Academica"],
@@ -77,7 +80,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         url = url.trimmingCharacters(in: .whitespacesAndNewlines)
         print(url)
         guard let urlRequest = URL(string: url) else {
-            return 1
+            Funciones().createAlerConfirmation(titulo: "Error", mensaje: "La contraseña no debe contener espacios en blanco", controlador: self, option: 2)
+            self.resetInputFields()
+            return
         }
 //        if let actividadesUsuario = datosPrueba as? [[String: Any]] {
 //            var allActividades: [Actividad] = []
@@ -135,11 +140,31 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     }
                 } catch {
                     print(error)
+                    statusCode = 1
                 }
             }
+            self.validarRequest(status: statusCode)
         }
         task.resume()
-        return statusCode
+    }
+    
+    // Funcion que valida el login, si es correcto, lo manda al controllador de actividades (default)
+    func validarRequest(status: Int) {
+        DispatchQueue.main.async {
+            switch status {
+            case 0:
+                print("Matricula o contraseña incorrectas")
+                Funciones().createAlerConfirmation(titulo: "Datos incorrectos", mensaje: "La matrícula o contraseña no coinciden", controlador: self, option: 2)
+                self.resetInputFields()
+            case 1:
+                print("Error")
+                Funciones().createAlerConfirmation(titulo: "Error", mensaje: "Ocurrió un error desconocido", controlador: self, option: 2)
+            default:
+                self.performSegue(withIdentifier: "tabBarSegue", sender: self)
+                UserDefaults.standard.set(true, forKey: "userLogin")
+            }
+        }
+        
     }
     @objc private func handleTextInputChange() {
         let isFormValid = matriculaTextField.text?.isEmpty == false && contrasenaTextField.text?.isEmpty == false
@@ -161,7 +186,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         contrasenaTextField.isUserInteractionEnabled = true
         
         loginButton.isEnabled = false
-        loginButton.backgroundColor = UIColor(red: 149/255, green: 204/255, blue: 244/255, alpha: 1)
+        //loginButton.backgroundColor = UIColor(red: 149/255, green: 204/255, blue: 244/255, alpha: 1)
     }
     
     private func setupInputFields() {

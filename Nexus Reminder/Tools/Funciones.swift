@@ -47,4 +47,25 @@ class Funciones {
             print("Ocurrio un error al eliminar todos los registros: \(error)")
         }
     }
+    
+    // Crea una alerta de confirmación
+    func createAlerConfirmation(titulo: String, mensaje: String, controlador: Any, option: Int) {
+        let alert = UIAlertController(title: titulo, message: mensaje, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "Entendido", style: .default, handler: nil)
+        alert.addAction(okButton)
+        // Option
+        // 1: UITableViewController
+        // 2: UIViewController
+        switch option {
+        case 1:
+            if let controller = controlador as? UITableViewController {
+                controller.present(alert, animated: true, completion: nil)
+            }
+        default:
+            if let controller = controlador as? UIViewController {
+                controller.present(alert, animated: true, completion: nil)
+            }
+        }
+        
+    }
 }
