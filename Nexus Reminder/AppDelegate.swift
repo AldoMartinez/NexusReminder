@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBar.isTranslucent = false
         navigationBar.tintColor = .white
         navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        sleep(2)
         return true
     }
 
