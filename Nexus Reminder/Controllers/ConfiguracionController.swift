@@ -18,6 +18,8 @@ class ConfiguracionController: UITableViewController {
     
     @IBAction func cerrarSesionButton(_ sender: UIButton) {
         UserDefaults.standard.set(false, forKey: "userLogin")
+        UserDefaults.standard.removeObject(forKey: "matricula")
+        UserDefaults.standard.removeObject(forKey: "contrasena")
         Funciones().setRootControllerTVC(storyboardID: "loginController", controller: self)
         Funciones().deleteActividades()
         Funciones().saveActividad()

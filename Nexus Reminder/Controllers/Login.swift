@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 class ViewController: UIViewController, UITextFieldDelegate {
 
@@ -16,9 +17,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
         navigationController?.isNavigationBarHidden = true
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnView)))
         setupInputFields()
-        // Se agregra observadores para ejecutar los métodos de las vistas cuando aparecen los teclados
+        // Se agrega observadores para ejecutar los métodos de las vistas cuando aparecen los teclados
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        pedirPermisoNotificaciones()
     }
     // MARK: Métodos para mover la vista cuando aparece y desparece el teclado
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -49,34 +52,27 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: Funciones
+    // Pide permiso al usuario para poder mandarle notificaciones
+    func pedirPermisoNotificaciones() {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
+            if granted {
+                print("Excelente")
+            } else {
+                print("De lo que te pierdes")
+            }
+        }
+    }
     // Funcion que hace el request a la API
     func obtenerActividades(matricula: String, contrasena: String) {
         var statusCode: Int = 2
-        let datosPrueba = [
-            ["actividades_pendientes" : [], "materia" : "Movilidad Academica"],
-            ["materia" : "Redes neuronales", "actividades_pendientes" : [
-                    [
-                    "tarea" : "Actividad diagnostica",
-                    "fecha_limite" : "22 de mayo"
-                    ],
-                    [
-                    "tarea" : "Actividad diagnostica",
-                    "fecha_limite" : "22 de mayo"
-                    ]
-                ]
-            ],
-            ["materia" : "Fisica 4", "actividades_pendientes" : [
-                    [
-                        "tarea" : "Actividad diagnostica",
-                        "fecha_limite" : "22 de mayo"
-                    ]
-                ]
-            ]
-        ]
         
         let base = "http://18.191.89.218/nexusApi/"
         let separador = "nexusApiAldo"
-        var url = base + matricula + separador + contrasena
+//        var url = base + matricula + separador + contrasena
+//        url = url.trimmingCharacters(in: .whitespacesAndNewlines)
+//        print(url)
+        var url = "https://pastebin.com/raw/PYfe7RGt"
         url = url.trimmingCharacters(in: .whitespacesAndNewlines)
         print(url)
         guard let urlRequest = URL(string: url) else {
@@ -84,27 +80,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
             self.resetInputFields()
             return
         }
-//        if let actividadesUsuario = datosPrueba as? [[String: Any]] {
-//            var allActividades: [Actividad] = []
-//            // Se recorren las materias para buscar si hay actividades pendientes
-//            for materia in actividadesUsuario {
-//                if let actividades = materia["actividades_pendientes"] as? [[String:String]]{
-//                    if actividades.count != 0 {
-//                        // Si hay actividad pendiente, se crea un Actividad
-//                        for actividad in actividades {
-//                            let nuevaActividad = Actividad(nombreActividad: actividad["tarea"] ?? "Desconocida", fechaLimite: actividad["fecha_limite"] ?? "--", datosMateria: materia)
-//                            allActividades.append(nuevaActividad)
-//                        }
-//                    }
-//                }
-//            }
-//            if allActividades.count == 0 {
-//                print("No tienes actividades pendientes")
-//            } else {
-//                print(allActividades)
-//                //UserDefaults.standard.set(allActividades, forKey: "actividades")
-//            }
-//        }
         let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
 
             if let data = data {
@@ -114,25 +89,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         if respuesta != "Matricula o contraseña incorrecta" {
                             let json = try JSONSerialization.jsonObject(with: data, options: [])
                             if let actividadesUsuario = json as? [[String: Any]] {
-                                // Se recorren las materias para buscar si hay actividades pendientes
-                                for materia in actividadesUsuario {
-                                    if let actividades = materia["actividades_pendientes"] as? [[String:String]]{
-                                        if actividades.count != 0 {
-                                            // Si hay actividad pendiente, se crea un Actividad
-                                            for actividad in actividades {
-                                                let nuevaActividad = Actividad(context: self.context)
-                                                nuevaActividad.completada = false
-                                                nuevaActividad.materia = materia["materia"] as? String ?? "Materia desconocida"
-                                                nuevaActividad.nombre = actividad["tarea"]
-                                                if let fechaNexus = actividad["fecha_limite"] {
-                                                    nuevaActividad.fecha_limite = self.convertToDate(fechaNexus: fechaNexus)
-                                                }
-                                                print(nuevaActividad)
-                                                Funciones().saveActividad()
-                                            }
-                                        }
-                                    }
-                                }
+                                GlobalVariables.shared.jsonResponse = actividadesUsuario
                             }
                         } else {
                             statusCode = 0
@@ -162,6 +119,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             default:
                 self.performSegue(withIdentifier: "tabBarSegue", sender: self)
                 UserDefaults.standard.set(true, forKey: "userLogin")
+                UserDefaults.standard.set(self.matriculaTextField.text, forKey: "matricula")
+                UserDefaults.standard.set(self.contrasenaTextField.text, forKey: "contrasena")
+//                Funciones().createLocalNotification(titulo: "Actividad pendiente", mensaje: "Tienes una actividad que se cierra en 1 hora")
             }
         }
         
@@ -209,15 +169,5 @@ class ViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    // MARK: Métodos para la manipulación del modelo de datos
-    // Convierte la fecha limite de nexus en formato Date
-    func convertToDate(fechaNexus: String) -> Date {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "es_MX")
-        formatter.dateFormat = "MMMM d, HH:mm 'hrs.'"
-        
-        guard let dateNexus = formatter.date(from: fechaNexus) else { return Date() }
-        return dateNexus
-    }
 }
 

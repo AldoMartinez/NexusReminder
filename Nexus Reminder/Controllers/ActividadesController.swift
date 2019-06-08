@@ -13,10 +13,11 @@ class ActividadesController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addPullDownRefreshToTable()
         bottomView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         //actividades = UserDefaults.standard.array(forKey: "actividades") as! [Actividad]
-        cargarActividades()
+        guardarActividadesCoreData(datosNexus: GlobalVariables.shared.jsonResponse)
     }
     // MARK: Variables
     var actividades: [Actividad] = []
@@ -26,6 +27,82 @@ class ActividadesController: UITableViewController {
 
     
     // MARK: Funciones
+    func addPullDownRefreshToTable() {
+        // Detecta cuando el usuarios hace pull down a la tabla
+        let refreshControl = UIRefreshControl()
+        self.tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
+        refreshControl.tintColor = .black
+    }
+    @objc func refreshTableView() {
+        requestToAPI()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.tableView.refreshControl?.endRefreshing()
+        }
+    }
+    func requestToAPI() {
+//        guard
+//            let matricula = UserDefaults.standard.string(forKey: "matricula"),
+//            let contrasena = UserDefaults.standard.string(forKey: "contrasena")
+//        else {
+//            return
+//        }
+//        let base = "http://18.191.89.218/nexusApi/"
+//        let separador = "nexusApiAldo"
+//        var url = base + matricula + separador + contrasena
+//        url = url.trimmingCharacters(in: .whitespacesAndNewlines)
+        let url = "https://pastebin.com/raw/tj6U6SMb"
+        guard let urlRequest = URL(string: url) else { return  }
+        let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            if let data = data {
+                do {
+                    if let respuesta = String(data: data, encoding: .utf8) {
+                        // Verifica lo retornado por el servidor
+                        if respuesta != "Matricula o contraseña incorrecta" {
+                            let json = try JSONSerialization.jsonObject(with: data, options: [])
+                            if let actividadesUsuario = json as? [[String: Any]] {
+                                GlobalVariables.shared.jsonResponse = actividadesUsuario
+                                DispatchQueue.main.async {
+                                    self.guardarActividadesCoreData(datosNexus: actividadesUsuario)
+                                    self.tableView.reloadData()
+                                }
+                            }
+                        }
+                    }
+                } catch {
+                }
+            }
+        }
+        task.resume()
+    }
+    func guardarActividadesCoreData(datosNexus: [[String:Any]]) {
+        // Se recorren las materias para buscar si hay actividades pendientes
+        for materia in datosNexus {
+            if let actividades = materia["actividades_pendientes"] as? [[String:String]] {
+                if actividades.count != 0 {
+                    // Si hay actividad pendiente, se guarda en la variable global actividadesPendientes
+                    for actividad in actividades {
+                        if Funciones().actividadNueva(nombreActividad: actividad["tarea"] ?? "act", materia: materia["materia"] as? String ?? "Materia desconocida") {
+                            let nuevaActividad = Actividad(context: self.context)
+                            nuevaActividad.completada = false
+                            nuevaActividad.materia = materia["materia"] as? String ?? "Materia desconocida"
+                            nuevaActividad.nombre = actividad["tarea"]
+                            if let fechaNexus = actividad["fecha_limite"] {
+                                nuevaActividad.fecha_limite = self.convertToDate(fechaNexus: fechaNexus)
+                            }
+                            print(nuevaActividad)
+                            Funciones().saveActividad()
+                        } else {
+                            print("Actividad antigua")
+                        }
+                    }
+                } else {
+                    print("No hay actividades pendientes de \(materia["materia"])")
+                }
+            }
+        }
+        cargarActividades()
+    }
     func cargarActividades() {
         let request: NSFetchRequest<Actividad> = Actividad.fetchRequest()
         do {
@@ -35,11 +112,22 @@ class ActividadesController: UITableViewController {
         }
     }
     
-    func convertNexusDateToString(fecha: Date) -> String {
+    // MARK: Métodos para la manipulación del modelo de datos
+    // Convierte la fecha limite de nexus en formato Date
+    func convertToDate(fechaNexus: String) -> Date {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "es_MX")
         formatter.dateFormat = "MMMM d, HH:mm 'hrs.'"
         
+        guard let dateNexus = formatter.date(from: fechaNexus) else { return Date() }
+        return dateNexus
+    }
+    // Convierte la fecha Limite del core data (Date) a String
+    func convertNexusDateToString(fecha: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "es_MX")
+//        formatter.dateFormat = "MMMM d, HH:mm 'hrs.'"
+        formatter.dateFormat = "d 'de' MMMM, HH:mm 'hrs.'"
         let dateNexus = formatter.string(from: fecha)
         return dateNexus
     }
@@ -63,10 +151,10 @@ class ActividadesController: UITableViewController {
             cell.fechaLimiteLabel.text = convertNexusDateToString(fecha: fechaLimite)
         }
         
-        cell.recuerdoDiaLabel.text = "Te quedan 3 dias para subir la tarea"
+        cell.recuerdoDiaLabel.text = "  Te quedan 3 dias para subir la tarea"
         
         // Da estilo al recuerdoDiaLabel
-        cell.recuerdoDiaLabel.layer.cornerRadius = 8
+        cell.recuerdoDiaLabel.layer.cornerRadius = 5
         cell.recuerdoDiaLabel.layer.masksToBounds = true
         cell.recuerdoDiaLabel.backgroundColor = UIColor(red: 5/255, green: 57/255, blue: 110/255, alpha: 1)
         cell.recuerdoDiaLabel.textColor = UIColor.white

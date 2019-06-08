@@ -45,9 +45,9 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="lW2-1p-23u"/>
                                         </constraints>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" textContentType="password"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O6H-jX-gZF">
                                         <rect key="frame" x="20" y="455" width="248" height="50"/>
@@ -121,7 +121,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="RjA-ut-vPD">
+                        <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="RjA-ut-vPD">
                             <rect key="frame" x="0.0" y="167" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -166,7 +166,7 @@
                                                                     <attributes>
                                                                         <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                         <font key="NSFont" size="13" name=".AppleSystemUIFont"/>
-                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" firstLineHeadIndent="5" tighteningFactorForTruncation="0.0"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" firstLineHeadIndent="10" tighteningFactorForTruncation="0.0"/>
                                                                     </attributes>
                                                                 </fragment>
                                                             </attributedString>
@@ -229,11 +229,11 @@
             </objects>
             <point key="canvasLocation" x="2760" y="34.859154929577464"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Actividades-->
         <scene sceneID="iND-Qp-XIq">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xWf-1x-MXO" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="topRated" id="yBf-bU-psV"/>
+                    <tabBarItem key="tabBarItem" title="Actividades" image="actividades" selectedImage="actividades" id="yBf-bU-psV"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Tnp-37-Rmx">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
@@ -298,11 +298,11 @@
             </objects>
             <point key="canvasLocation" x="2760" y="784"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Perfil-->
         <scene sceneID="DIP-R9-11Y">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Fv-PN-QJV" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="more" id="0qZ-Xb-qNi"/>
+                    <tabBarItem key="tabBarItem" title="Perfil" image="profile" selectedImage="profile" id="0qZ-Xb-qNi"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JHa-DX-34j">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
@@ -320,5 +320,7 @@
     </scenes>
     <resources>
         <image name="NexusReminderLogo" width="1024" height="1024"/>
+        <image name="actividades" width="30" height="30"/>
+        <image name="profile" width="30" height="30"/>
     </resources>
 </document>
