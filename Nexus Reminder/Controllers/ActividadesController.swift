@@ -58,7 +58,12 @@ class ActividadesController: UITableViewController {
                 do {
                     if let respuesta = String(data: data, encoding: .utf8) {
                         // Verifica lo retornado por el servidor
-                        if respuesta != "Matricula o contraseña incorrecta" {
+                        switch respuesta {
+                        case "0":
+                            print("No hay materias disponibles")
+                        case "1":
+                            print("Matricula o contraseña incorrectas")
+                        default:
                             let json = try JSONSerialization.jsonObject(with: data, options: [])
                             if let actividadesUsuario = json as? [[String: Any]] {
                                 GlobalVariables.shared.jsonResponse = actividadesUsuario
@@ -68,6 +73,10 @@ class ActividadesController: UITableViewController {
                                 }
                             }
                         }
+                        
+//                        if respuesta != "Matricula o contraseña incorrecta" {
+//                            
+//                        }
                     }
                 } catch {
                 }
@@ -75,13 +84,14 @@ class ActividadesController: UITableViewController {
         }
         task.resume()
     }
+    // Se guardan las actividades en el core data y se crean las notificaciones
     func guardarActividadesCoreData(datosNexus: [[String:Any]]) {
         // Se recorren las materias para buscar si hay actividades pendientes
         for materia in datosNexus {
-            if let actividades = materia["actividades_pendientes"] as? [[String:String]] {
-                if actividades.count != 0 {
+            if let actividadesPendientes = materia["actividades_pendientes"] as? [[String:String]] {
+                if actividadesPendientes.count != 0 {
                     // Si hay actividad pendiente, se guarda en la variable global actividadesPendientes
-                    for actividad in actividades {
+                    for actividad in actividadesPendientes {
                         if Funciones().actividadNueva(nombreActividad: actividad["tarea"] ?? "act", materia: materia["materia"] as? String ?? "Materia desconocida") {
                             let nuevaActividad = Actividad(context: self.context)
                             nuevaActividad.completada = false
@@ -89,11 +99,17 @@ class ActividadesController: UITableViewController {
                             nuevaActividad.nombre = actividad["tarea"]
                             if let fechaNexus = actividad["fecha_limite"] {
                                 nuevaActividad.fecha_limite = self.convertToDate(fechaNexus: fechaNexus)
+                                // Se crean las notificaciones para la actividad
+                                let cantidadNotificaciones = UserDefaults.standard.integer(forKey: "cantidadNotificaciones")
+                                if let tiempo = UserDefaults.standard.array(forKey: "tiemposSeleccionados") as? [Int] {
+                                    Funciones().configurarNotificaciones(cantidad: cantidadNotificaciones, frecuencia: tiempo, fechaActividad: nuevaActividad.fecha_limite ?? Date())
+                                } else {
+                                    print("Ocurrió un error al generar la notificación")
+                                }
+                                
                             }
                             print(nuevaActividad)
                             Funciones().saveActividad()
-                        } else {
-                            print("Actividad antigua")
                         }
                     }
                 } else {

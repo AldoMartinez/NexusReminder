@@ -65,35 +65,50 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     // Funcion que hace el request a la API
     func obtenerActividades(matricula: String, contrasena: String) {
-        var statusCode: Int = 2
+        var statusCode: Int = 3
         
-        let base = "http://18.191.89.218/nexusApi/"
-        let separador = "nexusApiAldo"
+//        let base = "http://18.191.89.218/nexusApi/"
+//        let separador = "nexusApiAldo"
 //        var url = base + matricula + separador + contrasena
 //        url = url.trimmingCharacters(in: .whitespacesAndNewlines)
 //        print(url)
-        var url = "https://pastebin.com/raw/PYfe7RGt"
-        url = url.trimmingCharacters(in: .whitespacesAndNewlines)
-        print(url)
-        guard let urlRequest = URL(string: url) else {
-            Funciones().createAlerConfirmation(titulo: "Error", mensaje: "La contraseña no debe contener espacios en blanco", controlador: self, option: 2)
-            self.resetInputFields()
-            return
-        }
-        let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+        var url = "https://pastebin.com/raw/B08wxr1d"
+        let urlRequest = URL(string: url)
+        //url = url.trimmingCharacters(in: .whitespacesAndNewlines)
+//        guard let urlRequest = URL(string: url) else {
+//            Funciones().createAlerConfirmation(titulo: "Error", mensaje: "La contraseña no debe contener espacios en blanco", controlador: self, option: 2)
+//            self.resetInputFields()
+//            return
+//        }
+        let task = URLSession.shared.dataTask(with: urlRequest!) { (data, response, error) in
 
             if let data = data {
+                print(data)
                 do {
                     if let respuesta = String(data: data, encoding: .utf8) {
                         // Verifica lo retornado por el servidor
-                        if respuesta != "Matricula o contraseña incorrecta" {
+                        switch respuesta {
+                        case "0":
+                            print("No hay materias disponibles")
+                        case "1":
+                            print("Matricula o contraseña incorrectas")
+                            statusCode = 1
+                        default:
                             let json = try JSONSerialization.jsonObject(with: data, options: [])
+                            
                             if let actividadesUsuario = json as? [[String: Any]] {
-                                GlobalVariables.shared.jsonResponse = actividadesUsuario
+                               GlobalVariables.shared.jsonResponse = actividadesUsuario
                             }
-                        } else {
-                            statusCode = 0
                         }
+                        // Verifica lo retornado por el servidor
+//                        if respuesta != "Matricula o contraseña incorrecta" {
+//                            let json = try JSONSerialization.jsonObject(with: data, options: [])
+//                            if let actividadesUsuario = json as? [[String: Any]] {
+//                                GlobalVariables.shared.jsonResponse = actividadesUsuario
+//                            }
+//                        } else {
+//                            statusCode = 0
+//                        }
                     }
                 } catch {
                     print(error)
@@ -109,19 +124,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func validarRequest(status: Int) {
         DispatchQueue.main.async {
             switch status {
-            case 0:
+            case 1:
                 print("Matricula o contraseña incorrectas")
                 Funciones().createAlerConfirmation(titulo: "Datos incorrectos", mensaje: "La matrícula o contraseña no coinciden", controlador: self, option: 2)
                 self.resetInputFields()
-            case 1:
+            case 2:
                 print("Error")
                 Funciones().createAlerConfirmation(titulo: "Error", mensaje: "Ocurrió un error desconocido", controlador: self, option: 2)
             default:
-                self.performSegue(withIdentifier: "tabBarSegue", sender: self)
+                self.performSegue(withIdentifier: "loginSegue", sender: self)
                 UserDefaults.standard.set(true, forKey: "userLogin")
                 UserDefaults.standard.set(self.matriculaTextField.text, forKey: "matricula")
                 UserDefaults.standard.set(self.contrasenaTextField.text, forKey: "contrasena")
-//                Funciones().createLocalNotification(titulo: "Actividad pendiente", mensaje: "Tienes una actividad que se cierra en 1 hora")
             }
         }
         

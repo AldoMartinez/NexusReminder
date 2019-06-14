@@ -12,6 +12,8 @@
 		4302335C22A2269D00F61C2B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302335B22A2269D00F61C2B /* Constants.swift */; };
 		4302335E22A228DE00F61C2B /* ConfiguracionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302335D22A228DE00F61C2B /* ConfiguracionController.swift */; };
 		4302336022A22E0600F61C2B /* Funciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302335F22A22E0600F61C2B /* Funciones.swift */; };
+		434C190722B32C3500864C21 /* ConfiguracionNotificacion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434C190622B32C3500864C21 /* ConfiguracionNotificacion.swift */; };
+		434C190922B3313B00864C21 /* TiempoNotificacion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434C190822B3313B00864C21 /* TiempoNotificacion.swift */; };
 		4362CA5F228F6E8E00A70EA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4362CA5E228F6E8E00A70EA1 /* AppDelegate.swift */; };
 		4362CA61228F6E8E00A70EA1 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4362CA60228F6E8E00A70EA1 /* Login.swift */; };
 		4362CA64228F6E8E00A70EA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4362CA62228F6E8E00A70EA1 /* Main.storyboard */; };
@@ -46,6 +48,8 @@
 		4302335B22A2269D00F61C2B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4302335D22A228DE00F61C2B /* ConfiguracionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguracionController.swift; sourceTree = "<group>"; };
 		4302335F22A22E0600F61C2B /* Funciones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Funciones.swift; sourceTree = "<group>"; };
+		434C190622B32C3500864C21 /* ConfiguracionNotificacion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguracionNotificacion.swift; sourceTree = "<group>"; };
+		434C190822B3313B00864C21 /* TiempoNotificacion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiempoNotificacion.swift; sourceTree = "<group>"; };
 		4362CA5B228F6E8E00A70EA1 /* Nexus Reminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nexus Reminder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4362CA5E228F6E8E00A70EA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4362CA60228F6E8E00A70EA1 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
@@ -165,6 +169,8 @@
 				4362CA60228F6E8E00A70EA1 /* Login.swift */,
 				43BB451E22A0E82500EF0E12 /* ActividadesController.swift */,
 				4302335D22A228DE00F61C2B /* ConfiguracionController.swift */,
+				434C190622B32C3500864C21 /* ConfiguracionNotificacion.swift */,
+				434C190822B3313B00864C21 /* TiempoNotificacion.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -315,7 +321,9 @@
 				4302335E22A228DE00F61C2B /* ConfiguracionController.swift in Sources */,
 				4395A4C922A2F3AF00F65239 /* ActividadesModel.xcdatamodeld in Sources */,
 				4302335C22A2269D00F61C2B /* Constants.swift in Sources */,
+				434C190922B3313B00864C21 /* TiempoNotificacion.swift in Sources */,
 				4302335822A21AC900F61C2B /* ActividadesCell.swift in Sources */,
+				434C190722B32C3500864C21 /* ConfiguracionNotificacion.swift in Sources */,
 				4302336022A22E0600F61C2B /* Funciones.swift in Sources */,
 				4362CA5F228F6E8E00A70EA1 /* AppDelegate.swift in Sources */,
 			);

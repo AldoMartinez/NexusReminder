@@ -64,7 +64,7 @@ class Funciones {
         alert.addAction(okButton)
         // Option
         // 1: UITableViewController
-        // 2: UIViewController
+        // Default: UIViewController
         switch option {
         case 1:
             if let controller = controlador as? UITableViewController {
@@ -78,23 +78,64 @@ class Funciones {
     }
     
     // Crea una local notification
-    func createLocalNotification(titulo: String, mensaje: String, fecha: DateComponents, subtitulo: String = "") {
+    func createLocalNotification(fechaTrigger: DateComponents, textoCompletador: String) {
         let notificationContent = UNMutableNotificationContent()
-        notificationContent.title = titulo
-        notificationContent.subtitle = subtitulo
-        notificationContent.body = mensaje
-//        var fecha = DateComponents(
-//        // Junio 5, 16:50
-//        fecha.day = 4
-//        fecha.month = 6
-//        fecha.hour = 16
-//        fecha.minute = 53
+        notificationContent.title = "Actividad pendiente"
+        notificationContent.body = "Tienes una actividad pendiente que se cierra en \(textoCompletador)"
         
         // Crea un trigger para saber cuando mostrar la notificacion
-        let trigger = UNCalendarNotificationTrigger(dateMatching: fecha, repeats: false)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: fechaTrigger, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: notificationContent, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        print("notificación creada con exito")
+    }
+    
+    // Se decide la cantidad y la frecuencia de las notificaciones por actividad
+    func configurarNotificaciones(cantidad: Int, frecuencia: [Int], fechaActividad: Date) {
+        // Convierte una variable tipo Date en tipo DateComponents
+        var notificationTrigger = Calendar.current.dateComponents([.month, .day, .hour, .minute], from: fechaActividad)
+        for indice in 0..<cantidad {
+            switch frecuencia[indice] {
+            case 0: // 1 hora antes
+                if var horaActividad = notificationTrigger.hour {
+                    horaActividad = horaActividad - 1
+                    notificationTrigger.hour = horaActividad
+                    let texto = "1 hora"
+                    self.createLocalNotification(fechaTrigger: notificationTrigger, textoCompletador: texto)
+                }
+            case 1: // 5 horas antes
+                if var horaActividad = notificationTrigger.hour {
+                    horaActividad = horaActividad - 5
+                    notificationTrigger.hour = horaActividad
+                    let texto = "5 horas"
+                    self.createLocalNotification(fechaTrigger: notificationTrigger, textoCompletador: texto)
+                }
+            case 2: // 1 dia antes
+                if var diaActividad = notificationTrigger.day {
+                    diaActividad = diaActividad - 1
+                    notificationTrigger.day = diaActividad
+                    let texto = "1 día"
+                    self.createLocalNotification(fechaTrigger: notificationTrigger, textoCompletador: texto)
+                }
+            case 3: // 3 dias antes
+                if var diaActividad = notificationTrigger.day {
+                    diaActividad = diaActividad - 3
+                    notificationTrigger.day = diaActividad
+                    let texto = "3 días"
+                    self.createLocalNotification(fechaTrigger: notificationTrigger, textoCompletador: texto)
+                }
+            case 4: // 5 dias antes
+                if var diaActividad = notificationTrigger.day {
+                    diaActividad = diaActividad - 7
+                    notificationTrigger.day = diaActividad
+                    let texto = "7 días"
+                    self.createLocalNotification(fechaTrigger: notificationTrigger, textoCompletador: texto)
+                }
+            default:
+                break
+            }
+        }
     }
     
     // Compara si el nombre de la actividad ya se encuentra en Core Data
