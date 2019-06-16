@@ -82,6 +82,7 @@ class Funciones {
         let notificationContent = UNMutableNotificationContent()
         notificationContent.title = "Actividad pendiente"
         notificationContent.body = "Tienes una actividad pendiente que se cierra en \(textoCompletador)"
+        notificationContent.sound = .default
         
         // Crea un trigger para saber cuando mostrar la notificacion
         let trigger = UNCalendarNotificationTrigger(dateMatching: fechaTrigger, repeats: false)
@@ -95,45 +96,48 @@ class Funciones {
     func configurarNotificaciones(cantidad: Int, frecuencia: [Int], fechaActividad: Date) {
         // Convierte una variable tipo Date en tipo DateComponents
         var notificationTrigger = Calendar.current.dateComponents([.month, .day, .hour, .minute], from: fechaActividad)
+        notificationTrigger.year = añoActual()
         for indice in 0..<cantidad {
+            var texto = ""
+            var newTriggerNotification = notificationTrigger
+            print("Fecha Actividad: \(notificationTrigger.description)")
             switch frecuencia[indice] {
             case 0: // 1 hora antes
-                if var horaActividad = notificationTrigger.hour {
+                if var horaActividad = newTriggerNotification.hour {
                     horaActividad = horaActividad - 1
-                    notificationTrigger.hour = horaActividad
-                    let texto = "1 hora"
-                    self.createLocalNotification(fechaTrigger: notificationTrigger, textoCompletador: texto)
+                    newTriggerNotification.hour = horaActividad
+                    texto = "1 hora"
                 }
             case 1: // 5 horas antes
-                if var horaActividad = notificationTrigger.hour {
+                if var horaActividad = newTriggerNotification.hour {
                     horaActividad = horaActividad - 5
-                    notificationTrigger.hour = horaActividad
-                    let texto = "5 horas"
-                    self.createLocalNotification(fechaTrigger: notificationTrigger, textoCompletador: texto)
+                    newTriggerNotification.hour = horaActividad
+                    texto = "5 horas"
                 }
             case 2: // 1 dia antes
-                if var diaActividad = notificationTrigger.day {
+                if var diaActividad = newTriggerNotification.day {
                     diaActividad = diaActividad - 1
-                    notificationTrigger.day = diaActividad
-                    let texto = "1 día"
-                    self.createLocalNotification(fechaTrigger: notificationTrigger, textoCompletador: texto)
+                    newTriggerNotification.day = diaActividad
+                    texto = "1 día"
+                    
                 }
             case 3: // 3 dias antes
-                if var diaActividad = notificationTrigger.day {
+                if var diaActividad = newTriggerNotification.day {
                     diaActividad = diaActividad - 3
-                    notificationTrigger.day = diaActividad
-                    let texto = "3 días"
-                    self.createLocalNotification(fechaTrigger: notificationTrigger, textoCompletador: texto)
+                    newTriggerNotification.day = diaActividad
+                    texto = "3 días"
                 }
-            case 4: // 5 dias antes
-                if var diaActividad = notificationTrigger.day {
+            case 4: // 7 dias antes
+                if var diaActividad = newTriggerNotification.day {
                     diaActividad = diaActividad - 7
-                    notificationTrigger.day = diaActividad
-                    let texto = "7 días"
-                    self.createLocalNotification(fechaTrigger: notificationTrigger, textoCompletador: texto)
+                    newTriggerNotification.day = diaActividad
+                    texto = "7 días"
                 }
             default:
                 break
+            }
+            if fechaEsValida(fechaActividad: newTriggerNotification) {
+                self.createLocalNotification(fechaTrigger: newTriggerNotification, textoCompletador: texto)
             }
         }
     }
@@ -156,5 +160,22 @@ class Funciones {
             print("Es necesario agregar la actividad")
             return true
         }
+    }
+    // Verifica si la fecha de la notificacion es menor a la fecha actual
+    // True: si la fecha es mayor a la fecha actual
+    // False: si la fecha es menor a la actual
+    func fechaEsValida(fechaActividad: DateComponents) -> Bool {
+        let fechaActual = Date()
+        guard let fechaActividadDate = Calendar.current.date(from: fechaActividad) else { return false }
+        if fechaActividadDate < fechaActual {
+            return false
+        }
+        return true
+    }
+    // Retorna el año actual
+    func añoActual() -> Int {
+        let fechaActual = Date()
+        let añoActual = Calendar.current.component(.year, from: fechaActual)
+        return añoActual
     }
 }

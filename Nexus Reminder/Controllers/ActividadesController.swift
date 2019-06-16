@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 class ActividadesController: UITableViewController {
     
@@ -51,7 +52,7 @@ class ActividadesController: UITableViewController {
 //        let separador = "nexusApiAldo"
 //        var url = base + matricula + separador + contrasena
 //        url = url.trimmingCharacters(in: .whitespacesAndNewlines)
-        let url = "https://pastebin.com/raw/tj6U6SMb"
+        let url = "https://pastebin.com/raw/B08wxr1d"
         guard let urlRequest = URL(string: url) else { return  }
         let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             if let data = data {
@@ -73,12 +74,9 @@ class ActividadesController: UITableViewController {
                                 }
                             }
                         }
-                        
-//                        if respuesta != "Matricula o contraseña incorrecta" {
-//                            
-//                        }
                     }
                 } catch {
+                    print("Ocurrio un error al hacer el request: \(error)")
                 }
             }
         }
@@ -102,11 +100,10 @@ class ActividadesController: UITableViewController {
                                 // Se crean las notificaciones para la actividad
                                 let cantidadNotificaciones = UserDefaults.standard.integer(forKey: "cantidadNotificaciones")
                                 if let tiempo = UserDefaults.standard.array(forKey: "tiemposSeleccionados") as? [Int] {
-                                    Funciones().configurarNotificaciones(cantidad: cantidadNotificaciones, frecuencia: tiempo, fechaActividad: nuevaActividad.fecha_limite ?? Date())
+                                    Funciones().configurarNotificaciones(cantidad: cantidadNotificaciones, frecuencia: tiempo, fechaActividad: nuevaActividad.fecha_limite!)
                                 } else {
                                     print("Ocurrió un error al generar la notificación")
                                 }
-                                
                             }
                             print(nuevaActividad)
                             Funciones().saveActividad()
@@ -126,8 +123,13 @@ class ActividadesController: UITableViewController {
         } catch {
             print("Error al cargar las actividades: \(error)")
         }
+        UNUserNotificationCenter.current().getPendingNotificationRequests { (notifications) in
+            print("Contador: \(notifications.count)")
+            for notificacion in notifications {
+                print(notificacion.trigger)
+            }
+        }
     }
-    
     // MARK: Métodos para la manipulación del modelo de datos
     // Convierte la fecha limite de nexus en formato Date
     func convertToDate(fechaNexus: String) -> Date {

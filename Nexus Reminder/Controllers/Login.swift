@@ -80,10 +80,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
 //            self.resetInputFields()
 //            return
 //        }
+
         let task = URLSession.shared.dataTask(with: urlRequest!) { (data, response, error) in
 
             if let data = data {
-                print(data)
                 do {
                     if let respuesta = String(data: data, encoding: .utf8) {
                         // Verifica lo retornado por el servidor
@@ -95,20 +95,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
                             statusCode = 1
                         default:
                             let json = try JSONSerialization.jsonObject(with: data, options: [])
-                            
+
                             if let actividadesUsuario = json as? [[String: Any]] {
-                               GlobalVariables.shared.jsonResponse = actividadesUsuario
+                                GlobalVariables.shared.jsonResponse = actividadesUsuario
+                                print(GlobalVariables.shared.jsonResponse)
                             }
                         }
-                        // Verifica lo retornado por el servidor
-//                        if respuesta != "Matricula o contraseña incorrecta" {
-//                            let json = try JSONSerialization.jsonObject(with: data, options: [])
-//                            if let actividadesUsuario = json as? [[String: Any]] {
-//                                GlobalVariables.shared.jsonResponse = actividadesUsuario
-//                            }
-//                        } else {
-//                            statusCode = 0
-//                        }
                     }
                 } catch {
                     print(error)
