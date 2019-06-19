@@ -1,0 +1,18 @@
+a.nav-link.js-scroll-trigger {
+  color: #222222 !important;
+}
+hr{
+  max-width: 100% !important;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.text-muted.politica{
+  text-align: justify;
+  white-space: pre-wrap;
+}
+h2.titulo {
+  font-size: 40px;
+}
+section.features .section-heading {
+    margin-bottom: 50px;
+}
