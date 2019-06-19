@@ -18,7 +18,12 @@ class ActividadesController: UITableViewController {
         bottomView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         //actividades = UserDefaults.standard.array(forKey: "actividades") as! [Actividad]
-        guardarActividadesCoreData(datosNexus: GlobalVariables.shared.jsonResponse)
+        actualizarUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        cargarActividades()
     }
     // MARK: Variables
     var actividades: [Actividad] = []
@@ -28,6 +33,11 @@ class ActividadesController: UITableViewController {
 
     
     // MARK: Funciones
+    
+    func actualizarUI() {
+        self.guardarActividadesCoreData(datosNexus: GlobalVariables.shared.jsonResponse)
+        self.tableView.reloadData()
+    }
     func addPullDownRefreshToTable() {
         // Detecta cuando el usuarios hace pull down a la tabla
         let refreshControl = UIRefreshControl()
@@ -85,11 +95,14 @@ class ActividadesController: UITableViewController {
     // Se guardan las actividades en el core data y se crean las notificaciones
     func guardarActividadesCoreData(datosNexus: [[String:Any]]) {
         // Se recorren las materias para buscar si hay actividades pendientes
+        print("Funcion para guardar actividades en core data")
+        print(datosNexus)
         for materia in datosNexus {
             if let actividadesPendientes = materia["actividades_pendientes"] as? [[String:String]] {
                 if actividadesPendientes.count != 0 {
                     // Si hay actividad pendiente, se guarda en la variable global actividadesPendientes
                     for actividad in actividadesPendientes {
+                        // Valida si la actividad no esta registrada en el core data
                         if Funciones().actividadNueva(nombreActividad: actividad["tarea"] ?? "act", materia: materia["materia"] as? String ?? "Materia desconocida") {
                             let nuevaActividad = Actividad(context: self.context)
                             nuevaActividad.completada = false
@@ -107,19 +120,25 @@ class ActividadesController: UITableViewController {
                             }
                             print(nuevaActividad)
                             Funciones().saveActividad()
+                        } else {
+                            print("La actividad ya ha sido registrada")
                         }
                     }
                 } else {
                     print("No hay actividades pendientes de \(materia["materia"])")
                 }
+            } else {
+                print("No fue posible obtener las actividades pendientes")
             }
         }
         cargarActividades()
     }
     func cargarActividades() {
         let request: NSFetchRequest<Actividad> = Actividad.fetchRequest()
+        request.returnsObjectsAsFaults = false
         do {
             self.actividades = try self.context.fetch(request)
+            print(self.actividades)
         } catch {
             print("Error al cargar las actividades: \(error)")
         }
@@ -136,7 +155,7 @@ class ActividadesController: UITableViewController {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "es_MX")
         formatter.dateFormat = "MMMM d, HH:mm 'hrs.'"
-        
+
         guard let dateNexus = formatter.date(from: fechaNexus) else { return Date() }
         return dateNexus
     }

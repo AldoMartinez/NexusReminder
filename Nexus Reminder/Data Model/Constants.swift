@@ -13,6 +13,7 @@ class GlobalVariables {
     var actividadNexus: actividad = .none
     var jsonResponse: [[String:Any]] = []
     
+    
     public enum sesion {
         case none, iniciada
     }

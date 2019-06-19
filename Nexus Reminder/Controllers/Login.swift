@@ -57,9 +57,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
             if granted {
-                print("Excelente")
+                print("Permiso de notificación concedido")
             } else {
-                print("De lo que te pierdes")
+                print("Permiso de notificación denegado")
             }
         }
     }
