@@ -4,7 +4,7 @@
 
 ## Preview
 
-[![New Age Preview](https://startbootstrap.com/assets/img/screenshots/themes/new-age.png)](https://aldomireles.me/NexusReminder/)
+[![New Age Preview](https://github.com/AldoMartinez/NexusReminder/blob/master/docs/img/nexusReminderLandPage.PNG)](https://aldomireles.me/NexusReminder/)
 
 **[View Live Preview](http://aldomireles.me/NexusReminder/)**
 
