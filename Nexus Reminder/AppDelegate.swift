@@ -90,13 +90,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 NSLog("json actualizado", "done")
                                 let json = try JSONSerialization.jsonObject(with: data, options: [])
                                 if let actividadesUsuario = json as? [[String: Any]] {
-                                    GlobalVariables.shared.jsonResponse = newData
-                                    print(GlobalVariables.shared.jsonResponse)
+                                    //print(GlobalVariables.shared.jsonResponse)
                                     DispatchQueue.main.async {
+                                        GlobalVariables.shared.jsonResponse = newData
                                         vc.actualizarUI()
-                                        vc.tableView.reloadData()
+                                        completionHandler(.newData)
                                     }
-                                    completionHandler(.newData)
+                                    
                                 }
                             }
                         }
@@ -117,6 +117,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.saveContext()
     }
+    
+//    func applicationWillEnterForeground(_ application: UIApplication) {
+//        let st = UIStoryboard(name: "Main", bundle: nil)
+//        if let vc = st.instantiateViewController(withIdentifier: "ActividadesController") as? ActividadesController {
+//            print("app entrara al foreground")
+//            vc.tableView.reloadData()
+//        }
+//    }
     
     // MARK: - Core Data stack
     

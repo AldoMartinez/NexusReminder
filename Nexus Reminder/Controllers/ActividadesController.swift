@@ -17,22 +17,29 @@ class ActividadesController: UITableViewController {
         addPullDownRefreshToTable()
         bottomView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        //actividades = UserDefaults.standard.array(forKey: "actividades") as! [Actividad]
+
         actualizarUI()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(true)
-//        self.tableView.reloadData()
-//    }
-    // MARK: Variables
-    var actividades: [Actividad] = [] {
-        didSet {
-            print("cambio en el array de actividades")
-            print(actividades)
-            self.tableView.reloadData()
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
+    
+    @objc func willEnterForeground() {
+        print("Entrará a la aplicacion despues del background")
+        cargarActividades()
+    }
+    // MARK: Variables
+    //var actividades: [Actividad] = []
+    lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
+        let fetchRequest : NSFetchRequest<NSFetchRequestResult> = Actividad.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "fecha_limite", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        return fetchedResultsController
+    }()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     // MARK: Outlets
     @IBOutlet weak var bottomView: UIView!
@@ -41,8 +48,7 @@ class ActividadesController: UITableViewController {
     // MARK: Funciones
     
     func actualizarUI() {
-        self.guardarActividadesCoreData(datosNexus: GlobalVariables.shared.jsonResponse)
-        //self.tableView.reloadData()
+        guardarActividadesCoreData(datosNexus: GlobalVariables.shared.jsonResponse)
     }
     func addPullDownRefreshToTable() {
         // Detecta cuando el usuarios hace pull down a la tabla
@@ -140,19 +146,12 @@ class ActividadesController: UITableViewController {
         cargarActividades()
     }
     func cargarActividades() {
-        let request: NSFetchRequest<Actividad> = Actividad.fetchRequest()
-        request.returnsObjectsAsFaults = false
         do {
-            self.actividades = try self.context.fetch(request)
-            print(self.actividades)
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                print("Tabla cargada")
-            }
-            
+            try fetchedResultsController.performFetch()
         } catch {
-            print("Error al cargar las actividades: \(error)")
+            fatalError("Hubo un error al obtener el listado de las actividades")
         }
+        tableView.reloadData()
         UNUserNotificationCenter.current().getPendingNotificationRequests { (notifications) in
             print("Contador: \(notifications.count)")
             for notificacion in notifications {
@@ -182,7 +181,12 @@ class ActividadesController: UITableViewController {
     
     // MARK: Funciones del table view
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return actividades.count
+        guard let sections = fetchedResultsController.sections else {
+            return 0
+        }
+        
+        let sectionInfo = sections[section]
+        return sectionInfo.numberOfObjects
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -193,9 +197,11 @@ class ActividadesController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "actividadesCell", for: indexPath) as! ActividadesCell
         cell.contentView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         
-        cell.materiaLabel.text = actividades[indexPath.row].materia
-        cell.actividadLabel.text = actividades[indexPath.row].nombre
-        if let fechaLimite = actividades[indexPath.row].fecha_limite {
+        let actividad = fetchedResultsController.object(at: indexPath) as! Actividad
+        
+        cell.materiaLabel.text = actividad.materia
+        cell.actividadLabel.text = actividad.nombre
+        if let fechaLimite = actividad.fecha_limite {
             cell.fechaLimiteLabel.text = convertNexusDateToString(fecha: fechaLimite)
         }
         
