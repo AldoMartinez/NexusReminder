@@ -94,6 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                     print(GlobalVariables.shared.jsonResponse)
                                     DispatchQueue.main.async {
                                         vc.actualizarUI()
+                                        vc.tableView.reloadData()
                                     }
                                     completionHandler(.newData)
                                 }

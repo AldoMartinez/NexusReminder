@@ -12,6 +12,7 @@
 		4302335C22A2269D00F61C2B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302335B22A2269D00F61C2B /* Constants.swift */; };
 		4302335E22A228DE00F61C2B /* ConfiguracionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302335D22A228DE00F61C2B /* ConfiguracionController.swift */; };
 		4302336022A22E0600F61C2B /* Funciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302335F22A22E0600F61C2B /* Funciones.swift */; };
+		433EFDE822BB14D300F2AD76 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EFDE722BB14D300F2AD76 /* CoreDataManager.swift */; };
 		4343141322B5C633001EA4F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4343141222B5C633001EA4F1 /* AppDelegate.swift */; };
 		4343141522B5C633001EA4F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4343141422B5C633001EA4F1 /* ViewController.swift */; };
 		4343141822B5C633001EA4F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4343141622B5C633001EA4F1 /* Main.storyboard */; };
@@ -54,6 +55,7 @@
 		4302335B22A2269D00F61C2B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4302335D22A228DE00F61C2B /* ConfiguracionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguracionController.swift; sourceTree = "<group>"; };
 		4302335F22A22E0600F61C2B /* Funciones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Funciones.swift; sourceTree = "<group>"; };
+		433EFDE722BB14D300F2AD76 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		4343141022B5C632001EA4F1 /* Desarrollo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Desarrollo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4343141222B5C633001EA4F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4343141422B5C633001EA4F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				4395A4C722A2F3AF00F65239 /* ActividadesModel.xcdatamodeld */,
 				4302335B22A2269D00F61C2B /* Constants.swift */,
 				4302335722A21AC900F61C2B /* ActividadesCell.swift */,
+				433EFDE722BB14D300F2AD76 /* CoreDataManager.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				4302335E22A228DE00F61C2B /* ConfiguracionController.swift in Sources */,
 				4395A4C922A2F3AF00F65239 /* ActividadesModel.xcdatamodeld in Sources */,
 				4302335C22A2269D00F61C2B /* Constants.swift in Sources */,
+				433EFDE822BB14D300F2AD76 /* CoreDataManager.swift in Sources */,
 				434C190922B3313B00864C21 /* TiempoNotificacion.swift in Sources */,
 				4302335822A21AC900F61C2B /* ActividadesCell.swift in Sources */,
 				434C190722B32C3500864C21 /* ConfiguracionNotificacion.swift in Sources */,

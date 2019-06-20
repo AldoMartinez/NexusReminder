@@ -21,12 +21,18 @@ class ActividadesController: UITableViewController {
         actualizarUI()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        cargarActividades()
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(true)
+//        self.tableView.reloadData()
+//    }
     // MARK: Variables
-    var actividades: [Actividad] = []
+    var actividades: [Actividad] = [] {
+        didSet {
+            print("cambio en el array de actividades")
+            print(actividades)
+            self.tableView.reloadData()
+        }
+    }
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     // MARK: Outlets
     @IBOutlet weak var bottomView: UIView!
@@ -36,7 +42,7 @@ class ActividadesController: UITableViewController {
     
     func actualizarUI() {
         self.guardarActividadesCoreData(datosNexus: GlobalVariables.shared.jsonResponse)
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
     }
     func addPullDownRefreshToTable() {
         // Detecta cuando el usuarios hace pull down a la tabla
@@ -139,6 +145,11 @@ class ActividadesController: UITableViewController {
         do {
             self.actividades = try self.context.fetch(request)
             print(self.actividades)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                print("Tabla cargada")
+            }
+            
         } catch {
             print("Error al cargar las actividades: \(error)")
         }
