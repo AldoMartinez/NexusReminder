@@ -23,9 +23,10 @@ class ActividadesController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        // Notifica a la app cuando la app retornará al foreground
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
-    
+    // Función que se ejecuta cuando la app entrará al foreground despues de estar en l background
     @objc func willEnterForeground() {
         print("Entrará a la aplicacion despues del background")
         cargarActividades()
