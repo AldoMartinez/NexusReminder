@@ -11,6 +11,13 @@ import CoreData
 import UserNotifications
 
 class Funciones {
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    lazy var fetchActividadesRequest: NSFetchRequest<Actividad> = {
+        let fetchRequest : NSFetchRequest<Actividad> = Actividad.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "fecha_limite", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        return fetchRequest
+    }()
     
     func setRootControllerVC (storyboardID: String, controller: UIViewController) {
         let appDelegate = UIApplication.shared.delegate! as! AppDelegate
@@ -44,11 +51,13 @@ class Funciones {
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
             // Create Fetch Request
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Actividad")
+            let fetchConfiguracionRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Configuracion")
             // Create Batch Delete Request
             let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            let batchDeleteConfigRequest = NSBatchDeleteRequest(fetchRequest: fetchConfiguracionRequest)
             do {
                 try context.execute(batchDeleteRequest)
-                
+                try context.execute(batchDeleteConfigRequest)
             } catch {
                 // Error Handling
                 print("Ocurrio un error al eliminar todos los registros: \(error)")
@@ -93,14 +102,14 @@ class Funciones {
     }
     
     // Se decide la cantidad y la frecuencia de las notificaciones por actividad
-    func configurarNotificaciones(cantidad: Int, frecuencia: [Int], fechaActividad: Date) {
+    func configurarNotificaciones(frecuencia: [Int], fechaActividad: Date) {
+        let cantidad = frecuencia.count
         // Convierte una variable tipo Date en tipo DateComponents
         var notificationTrigger = Calendar.current.dateComponents([.month, .day, .hour, .minute], from: fechaActividad)
         notificationTrigger.year = añoActual()
         for indice in 0..<cantidad {
             var texto = ""
             var newTriggerNotification = notificationTrigger
-            print("Fecha Actividad: \(notificationTrigger.description)")
             switch frecuencia[indice] {
             case 0: // 1 hora antes
                 if var horaActividad = newTriggerNotification.hour {
@@ -177,5 +186,21 @@ class Funciones {
         let fechaActual = Date()
         let añoActual = Calendar.current.component(.year, from: fechaActual)
         return añoActual
+    }
+    
+    // Retorna las actividades del Core Data
+    func obtenerActividades() -> [Actividad] {
+        var actividades: [Actividad] = []
+        do {
+            actividades = try self.context.fetch(fetchActividadesRequest)
+        } catch {
+            print("Ocurrió un error al obtener las actividades del Core Data: \(error)")
+        }
+        return actividades
+    }
+    // Elimina tanto las notificaciones pendientes como las mostradas
+    func eliminarNotificaciones() {
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
 }

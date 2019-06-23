@@ -144,7 +144,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         matriculaTextField.resignFirstResponder()
         contrasenaTextField.resignFirstResponder()
     }
-    
+    // Pone en blanco los textfields
     private func resetInputFields() {
         matriculaTextField.text = ""
         contrasenaTextField.text = ""
@@ -154,7 +154,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         loginButton.isEnabled = false
         //loginButton.backgroundColor = UIColor(red: 149/255, green: 204/255, blue: 244/255, alpha: 1)
     }
-    
+    // Da diseño a los textfields
     private func setupInputFields() {
         // matricula
         matriculaTextField.borderStyle = UITextField.BorderStyle.roundedRect

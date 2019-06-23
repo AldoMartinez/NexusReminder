@@ -6,7 +6,13 @@
         <attribute name="materia" attributeType="String" syncable="YES"/>
         <attribute name="nombre" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Configuracion" representedClassName=".Configuracion" syncable="YES" codeGenerationType="class">
+        <attribute name="seleccionado" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="tag" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="texto" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Actividad" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Configuracion" positionX="-63" positionY="9" width="128" height="90"/>
     </elements>
 </model>

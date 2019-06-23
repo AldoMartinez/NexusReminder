@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import UserNotifications
 
 class ConfiguracionController: UITableViewController {
     override func viewDidLoad() {
@@ -18,8 +17,7 @@ class ConfiguracionController: UITableViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     @IBAction func cerrarSesionButton(_ sender: UIButton) {
-        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        Funciones().eliminarNotificaciones()
         UserDefaults.standard.set(false, forKey: "userLogin")
         UserDefaults.standard.removeObject(forKey: "matricula")
         UserDefaults.standard.removeObject(forKey: "contrasena")

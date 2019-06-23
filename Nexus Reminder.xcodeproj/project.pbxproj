@@ -19,7 +19,6 @@
 		4343141B22B5C633001EA4F1 /* Desarrollo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4343141922B5C633001EA4F1 /* Desarrollo.xcdatamodeld */; };
 		4343141D22B5C637001EA4F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4343141C22B5C637001EA4F1 /* Assets.xcassets */; };
 		4343142022B5C637001EA4F1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4343141E22B5C637001EA4F1 /* LaunchScreen.storyboard */; };
-		434C190722B32C3500864C21 /* ConfiguracionNotificacion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434C190622B32C3500864C21 /* ConfiguracionNotificacion.swift */; };
 		434C190922B3313B00864C21 /* TiempoNotificacion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434C190822B3313B00864C21 /* TiempoNotificacion.swift */; };
 		4362CA5F228F6E8E00A70EA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4362CA5E228F6E8E00A70EA1 /* AppDelegate.swift */; };
 		4362CA61228F6E8E00A70EA1 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4362CA60228F6E8E00A70EA1 /* Login.swift */; };
@@ -29,6 +28,7 @@
 		4362CA74228F6E9000A70EA1 /* Nexus_ReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4362CA73228F6E9000A70EA1 /* Nexus_ReminderTests.swift */; };
 		4362CA7F228F6E9000A70EA1 /* Nexus_ReminderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4362CA7E228F6E9000A70EA1 /* Nexus_ReminderUITests.swift */; };
 		4395A4C922A2F3AF00F65239 /* ActividadesModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4395A4C722A2F3AF00F65239 /* ActividadesModel.xcdatamodeld */; };
+		43B7DBD422BF11E100D186F3 /* ConfiguracionTiempoNotificaciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B7DBD322BF11E100D186F3 /* ConfiguracionTiempoNotificaciones.swift */; };
 		43BB451F22A0E82500EF0E12 /* ActividadesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BB451E22A0E82500EF0E12 /* ActividadesController.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,7 +64,6 @@
 		4343141C22B5C637001EA4F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4343141F22B5C637001EA4F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4343142122B5C637001EA4F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		434C190622B32C3500864C21 /* ConfiguracionNotificacion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguracionNotificacion.swift; sourceTree = "<group>"; };
 		434C190822B3313B00864C21 /* TiempoNotificacion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiempoNotificacion.swift; sourceTree = "<group>"; };
 		4362CA5B228F6E8E00A70EA1 /* Nexus Reminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nexus Reminder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4362CA5E228F6E8E00A70EA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +79,7 @@
 		4362CA7E228F6E9000A70EA1 /* Nexus_ReminderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nexus_ReminderUITests.swift; sourceTree = "<group>"; };
 		4362CA80228F6E9000A70EA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4395A4C822A2F3AF00F65239 /* ActividadesModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ActividadesModel.xcdatamodel; sourceTree = "<group>"; };
+		43B7DBD322BF11E100D186F3 /* ConfiguracionTiempoNotificaciones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguracionTiempoNotificaciones.swift; sourceTree = "<group>"; };
 		43BB451E22A0E82500EF0E12 /* ActividadesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -209,8 +209,8 @@
 				4362CA60228F6E8E00A70EA1 /* Login.swift */,
 				43BB451E22A0E82500EF0E12 /* ActividadesController.swift */,
 				4302335D22A228DE00F61C2B /* ConfiguracionController.swift */,
-				434C190622B32C3500864C21 /* ConfiguracionNotificacion.swift */,
 				434C190822B3313B00864C21 /* TiempoNotificacion.swift */,
+				43B7DBD322BF11E100D186F3 /* ConfiguracionTiempoNotificaciones.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -410,7 +410,7 @@
 				433EFDE822BB14D300F2AD76 /* CoreDataManager.swift in Sources */,
 				434C190922B3313B00864C21 /* TiempoNotificacion.swift in Sources */,
 				4302335822A21AC900F61C2B /* ActividadesCell.swift in Sources */,
-				434C190722B32C3500864C21 /* ConfiguracionNotificacion.swift in Sources */,
+				43B7DBD422BF11E100D186F3 /* ConfiguracionTiempoNotificaciones.swift in Sources */,
 				4302336022A22E0600F61C2B /* Funciones.swift in Sources */,
 				4362CA5F228F6E8E00A70EA1 /* AppDelegate.swift in Sources */,
 			);

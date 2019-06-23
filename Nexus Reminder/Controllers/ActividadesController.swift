@@ -124,9 +124,8 @@ class ActividadesController: UITableViewController {
                             if let fechaNexus = actividad["fecha_limite"] {
                                 nuevaActividad.fecha_limite = self.convertToDate(fechaNexus: fechaNexus)
                                 // Se crean las notificaciones para la actividad
-                                let cantidadNotificaciones = UserDefaults.standard.integer(forKey: "cantidadNotificaciones")
                                 if let tiempo = UserDefaults.standard.array(forKey: "tiemposSeleccionados") as? [Int] {
-                                    Funciones().configurarNotificaciones(cantidad: cantidadNotificaciones, frecuencia: tiempo, fechaActividad: nuevaActividad.fecha_limite!)
+                                    Funciones().configurarNotificaciones(frecuencia: tiempo, fechaActividad: nuevaActividad.fecha_limite!)
                                 } else {
                                     print("Ocurrió un error al generar la notificación")
                                 }
