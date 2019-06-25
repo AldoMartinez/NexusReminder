@@ -17,6 +17,19 @@ class ConfiguracionController: UITableViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     @IBAction func cerrarSesionButton(_ sender: UIButton) {
+        let alerta = UIAlertController(title: "¿Estas seguro de cerrar sesión?", message: "Todas las notificaciones de tus actividades se perderán", preferredStyle: .alert)
+        let continuarButton = UIAlertAction(title: "Continuar", style: .default) { (UIAlertAction) in
+            self.eliminarConfiguracion()
+        }
+        let cancelarButton = UIAlertAction(title: "Cancelar", style: .destructive, handler: nil)
+        alerta.addAction(cancelarButton)
+        alerta.addAction(continuarButton)
+        
+        present(alerta, animated: true, completion: nil)
+    }
+    
+    // Elimina toda la configuracion del usuario
+    func eliminarConfiguracion() {
         Funciones().eliminarNotificaciones()
         UserDefaults.standard.set(false, forKey: "userLogin")
         UserDefaults.standard.removeObject(forKey: "matricula")
@@ -24,7 +37,9 @@ class ConfiguracionController: UITableViewController {
         Funciones().setRootControllerTVC(storyboardID: "loginController", controller: self)
         Funciones().deleteActividades()
         Funciones().saveActividad()
+        print("Configuracion eliminada")
     }
+    
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2

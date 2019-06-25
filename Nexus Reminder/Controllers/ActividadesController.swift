@@ -54,7 +54,11 @@ class ActividadesController: UITableViewController {
     func addPullDownRefreshToTable() {
         // Detecta cuando el usuarios hace pull down a la tabla
         let refreshControl = UIRefreshControl()
-        self.tableView.refreshControl = refreshControl
+        if #available(iOS 10.0, *) {
+            self.tableView.refreshControl = refreshControl
+        } else {
+            self.tableView.addSubview(refreshControl)
+        }
         refreshControl.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
         refreshControl.tintColor = .black
     }
