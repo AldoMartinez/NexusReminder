@@ -27,6 +27,8 @@
 		4362CA69228F6E8F00A70EA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4362CA67228F6E8F00A70EA1 /* LaunchScreen.storyboard */; };
 		4362CA74228F6E9000A70EA1 /* Nexus_ReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4362CA73228F6E9000A70EA1 /* Nexus_ReminderTests.swift */; };
 		4362CA7F228F6E9000A70EA1 /* Nexus_ReminderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4362CA7E228F6E9000A70EA1 /* Nexus_ReminderUITests.swift */; };
+		43827CF422C1E20C002B2072 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43827CF222C1E20C002B2072 /* HeaderView.swift */; };
+		43827CF522C1E20C002B2072 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43827CF322C1E20C002B2072 /* HeaderView.xib */; };
 		4395A4C922A2F3AF00F65239 /* ActividadesModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4395A4C722A2F3AF00F65239 /* ActividadesModel.xcdatamodeld */; };
 		43B7DBD422BF11E100D186F3 /* ConfiguracionTiempoNotificaciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B7DBD322BF11E100D186F3 /* ConfiguracionTiempoNotificaciones.swift */; };
 		43BB451F22A0E82500EF0E12 /* ActividadesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BB451E22A0E82500EF0E12 /* ActividadesController.swift */; };
@@ -78,6 +80,8 @@
 		4362CA7A228F6E9000A70EA1 /* Nexus ReminderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Nexus ReminderUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4362CA7E228F6E9000A70EA1 /* Nexus_ReminderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nexus_ReminderUITests.swift; sourceTree = "<group>"; };
 		4362CA80228F6E9000A70EA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		43827CF222C1E20C002B2072 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HeaderView.swift; path = ../Views/HeaderView.swift; sourceTree = "<group>"; };
+		43827CF322C1E20C002B2072 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
 		4395A4C822A2F3AF00F65239 /* ActividadesModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ActividadesModel.xcdatamodel; sourceTree = "<group>"; };
 		43B7DBD322BF11E100D186F3 /* ConfiguracionTiempoNotificaciones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguracionTiempoNotificaciones.swift; sourceTree = "<group>"; };
 		43BB451E22A0E82500EF0E12 /* ActividadesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesController.swift; sourceTree = "<group>"; };
@@ -209,6 +213,7 @@
 				4362CA60228F6E8E00A70EA1 /* Login.swift */,
 				43BB451E22A0E82500EF0E12 /* ActividadesController.swift */,
 				4302335D22A228DE00F61C2B /* ConfiguracionController.swift */,
+				43827CF222C1E20C002B2072 /* HeaderView.swift */,
 				434C190822B3313B00864C21 /* TiempoNotificacion.swift */,
 				43B7DBD322BF11E100D186F3 /* ConfiguracionTiempoNotificaciones.swift */,
 			);
@@ -220,6 +225,7 @@
 			children = (
 				4362CA62228F6E8E00A70EA1 /* Main.storyboard */,
 				4362CA67228F6E8F00A70EA1 /* LaunchScreen.storyboard */,
+				43827CF322C1E20C002B2072 /* HeaderView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -367,6 +373,7 @@
 				4362CA69228F6E8F00A70EA1 /* LaunchScreen.storyboard in Resources */,
 				4362CA66228F6E8F00A70EA1 /* Assets.xcassets in Resources */,
 				4362CA64228F6E8E00A70EA1 /* Main.storyboard in Resources */,
+				43827CF522C1E20C002B2072 /* HeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,6 +420,7 @@
 				43B7DBD422BF11E100D186F3 /* ConfiguracionTiempoNotificaciones.swift in Sources */,
 				4302336022A22E0600F61C2B /* Funciones.swift in Sources */,
 				4362CA5F228F6E8E00A70EA1 /* AppDelegate.swift in Sources */,
+				43827CF422C1E20C002B2072 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
