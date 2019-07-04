@@ -203,6 +203,45 @@ class Funciones {
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
+    
+    // Retorna el mensaje de la cantidad de horas/dias que le quedan al usuario para subir la actividad
+    func obtenerMensajeTiempoRestante(fechaActividad: Date) -> String {
+        let fechaActividadAñoActualizado = agregarAñoActual(fecha: fechaActividad)
+        let calendario = Calendar.current
+        let fechaActual = Date()
+        let components = calendario.dateComponents([.hour], from: fechaActual, to: fechaActividadAñoActualizado)
+        let horasRestantes = components.hour!
+        var mensaje = ""
+        if horasRestantes >= 24 {
+            let diasRestantes: Int = horasRestantes / 24
+            if diasRestantes == 1 {
+                mensaje = "  Te queda \(diasRestantes) dia para subir la actividad"
+            } else {
+                mensaje = "  Te quedan \(diasRestantes) dias para subir la actividad"
+            }
+            
+        } else {
+            if horasRestantes == 1 {
+                mensaje = "  Te queda \(horasRestantes) hora para subir la actividad"
+            } else {
+                if horasRestantes < 0 {
+                    mensaje = "  La actividad ya se venció"
+                } else {
+                    mensaje = "  Te quedan \(horasRestantes) horas para subir la actividad"
+                }
+                
+            }
+        }
+        return mensaje
+    }
+    
+    // Agrega el año actual a una fecha
+    func agregarAñoActual(fecha: Date) -> Date {
+        var fechaComponentes = Calendar.current.dateComponents([.minute, .hour, .day, .month], from: fecha)
+        fechaComponentes.year = añoActual()
+        guard let fechaActualizada = Calendar.current.date(from: fechaComponentes) else { return Date() }
+        return fechaActualizada
+    }
 }
 
 extension UIImageView {

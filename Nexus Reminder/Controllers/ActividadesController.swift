@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import UserNotifications
+import GoogleMobileAds
 
 class ActividadesController: UITableViewController {
     
@@ -23,6 +24,8 @@ class ActividadesController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        // Actualiza los mensajes de las actividades
+        tableView.reloadData()
         // Notifica a la app cuando la app retornará al foreground
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
@@ -69,18 +72,18 @@ class ActividadesController: UITableViewController {
         }
     }
     func requestToAPI() {
-//        guard
-//            let matricula = UserDefaults.standard.string(forKey: "matricula"),
-//            let contrasena = UserDefaults.standard.string(forKey: "contrasena")
-//        else {
-//            return
-//        }
-//        let base = "http://18.191.89.218/nexusApi/"
-//        let separador = "nexusApiAldo"
-//        var url = base + matricula + separador + contrasena
-//        url = url.trimmingCharacters(in: .whitespacesAndNewlines)
-        let url = "https://pastebin.com/raw/B08wxr1d"
-        guard let urlRequest = URL(string: url) else { return  }
+        guard
+            let matricula = UserDefaults.standard.string(forKey: "matricula"),
+            let contrasena = UserDefaults.standard.string(forKey: "contrasena")
+        else {
+            return
+        }
+        let base = "http://18.191.89.218/nexusApi/"
+        let separador = "nexusApiAldo"
+        var url = base + matricula + separador + contrasena
+        url = url.trimmingCharacters(in: .whitespacesAndNewlines)
+//        let url = "https://pastebin.com/raw/B08wxr1d"
+        guard let urlRequest = URL(string: url) else { return }
         let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             if let data = data {
                 do {
@@ -209,7 +212,7 @@ class ActividadesController: UITableViewController {
             cell.fechaLimiteLabel.text = convertNexusDateToString(fecha: fechaLimite)
         }
         
-        cell.recuerdoDiaLabel.text = "  Te quedan 3 dias para subir la tarea"
+        cell.recuerdoDiaLabel.text = Funciones().obtenerMensajeTiempoRestante(fechaActividad: actividad.fecha_limite!)
         
         // Da estilo al recuerdoDiaLabel
         cell.recuerdoDiaLabel.layer.cornerRadius = 5
@@ -221,6 +224,32 @@ class ActividadesController: UITableViewController {
         cell.updateConstraintsIfNeeded()
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let alturaBanner = CGFloat(integerLiteral: 50)
+        let alturaTabBar = CGFloat(integerLiteral: 49)
+        let posicionY = self.view.frame.height - alturaBanner - alturaTabBar
+        let adView: UIView = UIView(frame: CGRect.init(x: 0, y: posicionY, width: self.view.frame.size.width, height: 50))
+        adView.autoresizingMask = UIView.AutoresizingMask.flexibleWidth
+        
+        let bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        
+        let request = GADRequest()
+        request.testDevices = ["91edbaa882c469d367e9322c89e96f6d", "25494902e9a1cc44c9164319aa84bc5c"]
+        bannerView.load(request)
+        
+        adView.addSubview(bannerView)
+        
+        return adView
     }
     
 }

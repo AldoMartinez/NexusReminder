@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -32,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Trae datos del servidor cada minuto
         UIApplication.shared.setMinimumBackgroundFetchInterval(10)
+        
+        // Google Ads
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
 //        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         return true
     }

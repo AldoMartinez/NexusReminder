@@ -9,8 +9,9 @@
 import UIKit
 import CoreData
 import UserNotifications
+import GoogleMobileAds
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, GADBannerViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +23,32 @@ class ViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         pedirPermisoNotificaciones()
+        // Configuracion del banner
+        //self.bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        self.bannerView.delegate = self
+        //addBannerViewToView(bannerView)
+        
+        self.bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        self.bannerView.rootViewController = self
+        let request = GADRequest()
+        request.testDevices = ["91edbaa882c469d367e9322c89e96f6d", "25494902e9a1cc44c9164319aa84bc5c"]
+        self.bannerView.load(request)
     }
+    
+    // MARK: Configuracion del Google Banner
+//    func addBannerViewToView(_ bannerView: GADBannerView) {
+//        bannerView.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(bannerView)
+//        view.addConstraints([
+//            NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0),
+//            NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
+//            ])
+//    }
+    
+    func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
+        print("Error con el banner: \(error.localizedDescription)")
+    }
+    
     // MARK: Métodos para mover la vista cuando aparece y desparece el teclado
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo else { return }
@@ -45,6 +71,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var matriculaTextField: UITextField!
     @IBOutlet weak var contrasenaTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet var bannerView: GADBannerView!
     
     // MARK: Actions
     @IBAction func LoginButton(_ sender: UIButton) {
@@ -67,21 +94,20 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func obtenerActividades(matricula: String, contrasena: String) {
         var statusCode: Int = 3
         
-//        let base = "http://18.191.89.218/nexusApi/"
-//        let separador = "nexusApiAldo"
-//        var url = base + matricula + separador + contrasena
-//        url = url.trimmingCharacters(in: .whitespacesAndNewlines)
+        let base = "http://18.191.89.218/nexusApi/"
+        let separador = "nexusApiAldo"
+        var url = base + matricula + separador + contrasena
+        url = url.trimmingCharacters(in: .whitespacesAndNewlines)
 //        print(url)
-        var url = "https://pastebin.com/raw/B08wxr1d"
-        let urlRequest = URL(string: url)
-        //url = url.trimmingCharacters(in: .whitespacesAndNewlines)
-//        guard let urlRequest = URL(string: url) else {
-//            Funciones().createAlerConfirmation(titulo: "Error", mensaje: "La contraseña no debe contener espacios en blanco", controlador: self, option: 2)
-//            self.resetInputFields()
-//            return
-//        }
+//        var url = "https://pastebin.com/raw/B08wxr1d"
+//        let urlRequest = URL(string: url)
+        guard let urlRequest = URL(string: url) else {
+            Funciones().createAlerConfirmation(titulo: "Error", mensaje: "La contraseña no debe contener espacios en blanco", controlador: self, option: 2)
+            self.resetInputFields()
+            return
+        }
 
-        let task = URLSession.shared.dataTask(with: urlRequest!) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
 
             if let data = data {
                 do {
