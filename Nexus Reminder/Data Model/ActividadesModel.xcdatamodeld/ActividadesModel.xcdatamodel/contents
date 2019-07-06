@@ -5,6 +5,7 @@
         <attribute name="fecha_limite" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="materia" attributeType="String" syncable="YES"/>
         <attribute name="nombre" attributeType="String" syncable="YES"/>
+        <attribute name="vencida" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="Configuracion" representedClassName=".Configuracion" syncable="YES" codeGenerationType="class">
         <attribute name="seleccionado" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
@@ -12,7 +13,7 @@
         <attribute name="texto" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Actividad" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Actividad" positionX="-63" positionY="-18" width="128" height="120"/>
         <element name="Configuracion" positionX="-63" positionY="9" width="128" height="90"/>
     </elements>
 </model>

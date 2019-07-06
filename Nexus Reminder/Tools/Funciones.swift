@@ -210,7 +210,7 @@ class Funciones {
         let calendario = Calendar.current
         let fechaActual = Date()
         let components = calendario.dateComponents([.hour], from: fechaActual, to: fechaActividadAñoActualizado)
-        let horasRestantes = components.hour!
+        let horasRestantes = components.hour! + 1
         var mensaje = ""
         if horasRestantes >= 24 {
             let diasRestantes: Int = horasRestantes / 24

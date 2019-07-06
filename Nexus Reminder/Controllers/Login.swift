@@ -24,19 +24,11 @@ class ViewController: UIViewController, UITextFieldDelegate, GADBannerViewDelega
         
         pedirPermisoNotificaciones()
         // Configuracion del banner
-        //self.bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-        self.bannerView.delegate = self
-        //addBannerViewToView(bannerView)
-        
         self.bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         self.bannerView.rootViewController = self
         let request = GADRequest()
         request.testDevices = ["91edbaa882c469d367e9322c89e96f6d", "25494902e9a1cc44c9164319aa84bc5c"]
         self.bannerView.load(request)
-    }
-    
-    func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
-        print("Error con el banner: \(error.localizedDescription)")
     }
     
     // MARK: Métodos para mover la vista cuando aparece y desparece el teclado
@@ -128,36 +120,6 @@ class ViewController: UIViewController, UITextFieldDelegate, GADBannerViewDelega
             self.validarRequest(status: statusCode)
         })
         dataTask?.resume()
-//        let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-//
-//            if let data = data {
-//                do {
-//                    if let respuesta = String(data: data, encoding: .utf8) {
-//                        print(respuesta)
-//                        // Verifica lo retornado por el servidor
-//                        switch respuesta {
-//                        case "0":
-//                            print("No hay materias disponibles")
-//                        case "1":
-//                            print("Matricula o contraseña incorrectas")
-//                            statusCode = 1
-//                        default:
-//                            let json = try JSONSerialization.jsonObject(with: data, options: [])
-//
-//                            if let actividadesUsuario = json as? [[String: Any]] {
-//                                GlobalVariables.shared.jsonResponse = actividadesUsuario
-//                                print(GlobalVariables.shared.jsonResponse)
-//                            }
-//                        }
-//                    }
-//                } catch {
-//                    print(error)
-//                    statusCode = 2
-//                }
-//            }
-//            self.validarRequest(status: statusCode)
-//        }
-//        task.resume()
     }
     
     // Funcion que valida el login, si es correcto, lo manda al controllador de actividades (default)

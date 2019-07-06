@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                "actividades_pendientes" : [
 //                    [
 //                        "tarea" : "Actividad fundamental 7",
-//                        "fecha_limite" : "Julio 25, 17:20 hrs."
+//                        "fecha_limite" : "Junio 25, 17:20 hrs."
 //                    ]
 //                ]
 //            ]
@@ -112,41 +112,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                 })
                 dataTask?.resume()
-//                urlSesion.dataTask(with: urlRequest!) { (data, response, error) in
-//                    NSLog("URLSesion creada", "")
-//                    guard let data = data, error == nil else {
-//                        completionHandler(.failed)
-//                        return
-//                    }
-//                    do {
-//
-//                        if let respuesta = String(data: data, encoding: .utf8) {
-//                            // Verifica lo retornado por el servidor
-//                            switch respuesta {
-//                            case "0":
-//                                break
-//                                //print("No hay materias disponibles")
-//                            case "1":
-//                                break
-//                                //print("Matricula o contraseña incorrectas")
-//                            default:
-//                                NSLog("json actualizado", "done")
-//                                let json = try JSONSerialization.jsonObject(with: data, options: [])
-//                                if let actividadesUsuario = json as? [[String: Any]] {
-//                                    DispatchQueue.main.async {
-//                                        GlobalVariables.shared.jsonResponse = newData
-//                                        vc.actualizarUI()
-//                                        completionHandler(.newData)
-//                                    }
-//
-//                                }
-//                            }
-//                        }
-//                    } catch {
-//                        print("Ocurrio un error al hacer el request: \(error)")
-//                        completionHandler(.noData)
-//                    }
-//                }.resume()
             } else {
                 NSLog("Error al crear actividades controller", "")
             }

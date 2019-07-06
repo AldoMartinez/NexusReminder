@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Nexus Reminder/Controllers/ActividadesController.swift"
-            timestampString = "584092802.621097"
+            timestampString = "584097686.235974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "guardarActividadesCoreData(datosNexus:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Nexus Reminder/Controllers/ActividadesController.swift"
-            timestampString = "584092802.622484"
+            timestampString = "584097686.237641"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
             landmarkName = "cargarActividades()"
             landmarkType = "7">
          </BreakpointContent>

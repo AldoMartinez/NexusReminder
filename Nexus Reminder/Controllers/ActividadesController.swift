@@ -33,6 +33,7 @@ class ActividadesController: UIViewController, UITableViewDelegate, UITableViewD
     // Función que se ejecuta cuando la app entrará al foreground despues de estar en l background
     @objc func willEnterForeground() {
         print("Entrará a la aplicacion despues del background")
+        validarActividadesVencidas()
         cargarActividades()
     }
     // MARK: Variables
@@ -41,10 +42,13 @@ class ActividadesController: UIViewController, UITableViewDelegate, UITableViewD
     
     lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
         let fetchRequest : NSFetchRequest<NSFetchRequestResult> = Actividad.fetchRequest()
+        // Valida que solo capture las actividades que no esten vencidas
+        fetchRequest.predicate = NSPredicate(format: "vencida == %@", NSNumber(value: false))
         let sortDescriptor = NSSortDescriptor(key: "fecha_limite", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        
         return fetchedResultsController
     }()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -56,6 +60,22 @@ class ActividadesController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     // MARK: Funciones
+    // Verifica que las actividades no estén vencidas
+    func validarActividadesVencidas() {
+        print("Actividades antes de validar su fecha")
+        print(self.fetchedResultsController.fetchedObjects)
+        guard let cantidadObjetos = self.fetchedResultsController.fetchedObjects?.count else { return }
+        for indice in 0..<cantidadObjetos {
+            if let actividad = self.fetchedResultsController.fetchedObjects?[indice] as? Actividad {
+                var fechaLimite = Calendar.current.dateComponents([.minute, .hour, .day, .month], from: actividad.fecha_limite ?? Date())
+                fechaLimite.year = Funciones().añoActual()
+                let actividadNoVencida = Funciones().fechaEsValida(fechaActividad: fechaLimite)
+                actividad.vencida = !actividadNoVencida
+                Funciones().saveActividad()
+            }
+        }
+    }
+    
     // Configuracion necesaria para mostrar el banner de google
     func configurarBanner() {
         self.bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
@@ -131,33 +151,6 @@ class ActividadesController: UIViewController, UITableViewDelegate, UITableViewD
             }
         })
         dataTask?.resume()
-//        let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-//            if let data = data {
-//                do {
-//                    if let respuesta = String(data: data, encoding: .utf8) {
-//                        // Verifica lo retornado por el servidor
-//                        switch respuesta {
-//                        case "0":
-//                            print("No hay materias disponibles")
-//                        case "1":
-//                            print("Matricula o contraseña incorrectas")
-//                        default:
-//                            let json = try JSONSerialization.jsonObject(with: data, options: [])
-//                            if let actividadesUsuario = json as? [[String: Any]] {
-//                                GlobalVariables.shared.jsonResponse = actividadesUsuario
-//                                DispatchQueue.main.async {
-//                                    self.guardarActividadesCoreData(datosNexus: actividadesUsuario)
-//                                    self.tableView.reloadData()
-//                                }
-//                            }
-//                        }
-//                    }
-//                } catch {
-//                    print("Ocurrio un error al hacer el request: \(error)")
-//                }
-//            }
-//        }
-//        task.resume()
     }
     // Se guardan las actividades en el core data y se crean las notificaciones
     func guardarActividadesCoreData(datosNexus: [[String:Any]]) {
@@ -173,6 +166,7 @@ class ActividadesController: UIViewController, UITableViewDelegate, UITableViewD
                         if Funciones().actividadNueva(nombreActividad: actividad["tarea"] ?? "act", materia: materia["materia"] as? String ?? "Materia desconocida") {
                             let nuevaActividad = Actividad(context: self.context)
                             nuevaActividad.completada = false
+                            nuevaActividad.vencida = false
                             nuevaActividad.materia = materia["materia"] as? String ?? "Materia desconocida"
                             nuevaActividad.nombre = actividad["tarea"]
                             if let fechaNexus = actividad["fecha_limite"] {
