@@ -8,14 +8,16 @@
 
 import UIKit
 import CoreData
+import GoogleMobileAds
 
-class TiempoNotificacion: UITableViewController {
+class TiempoNotificacion: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.isEditing = true
-        tableView.allowsMultipleSelectionDuringEditing = true
+        self.tableView.isEditing = true
+        self.tableView.allowsMultipleSelectionDuringEditing = true
         configuracionInicial()
         fetchConfiguracion()
+        configurarBanner()
     }
     
     // MARK: Propiedades
@@ -23,6 +25,9 @@ class TiempoNotificacion: UITableViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var configuraciones: [Configuracion] = []
     
+    // MARK: Outlets
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var bannerView: GADBannerView!
     
     // MARK: Acciones
     @IBAction func hechoButton(_ sender: UIBarButtonItem) {
@@ -33,11 +38,19 @@ class TiempoNotificacion: UITableViewController {
             Funciones().saveActividad()
             self.performSegue(withIdentifier: "tabBarSegue", sender: self)
         } else {
-            Funciones().createAlerConfirmation(titulo: "¡Cuidado!", mensaje: "Selecciona al menos una opción", controlador: self, option: 1)
+            Funciones().createAlerConfirmation(titulo: "¡Cuidado!", mensaje: "Selecciona al menos una opción", controlador: self, option: 2)
         }
     }
     
     // MARK: Funciones
+    // Configuracion necesaria para mostrar el banner de google
+    func configurarBanner() {
+        self.bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        self.bannerView.rootViewController = self
+        let request = GADRequest()
+        request.testDevices = ["91edbaa882c469d367e9322c89e96f6d", "25494902e9a1cc44c9164319aa84bc5c"]
+        self.bannerView.load(request)
+    }
     
     // Llena el array de las opciones seleccionadas con los tags
     func tagsDeOpcionesSeleccionadas(data: [IndexPath]) {
@@ -73,6 +86,7 @@ class TiempoNotificacion: UITableViewController {
     // Obtiene la configuracion del usuario de las notificaciones
     func fetchConfiguracion() {
         let request: NSFetchRequest<Configuracion> = Configuracion.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "tag", ascending: true)]
         do {
             configuraciones = try context.fetch(request)
             print(configuraciones)
@@ -82,20 +96,23 @@ class TiempoNotificacion: UITableViewController {
     }
     
     // MARK: Funciones del table view
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         configuraciones[indexPath.row].seleccionado = !configuraciones[indexPath.row].seleccionado
-        print(tableView.cellForRow(at: indexPath)?.tag)
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        configuraciones[indexPath.row].seleccionado = !configuraciones[indexPath.row].seleccionado
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return configuraciones.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "configuracionCell", for: indexPath)
         
         let configuracion = configuraciones[indexPath.row]
@@ -104,5 +121,8 @@ class TiempoNotificacion: UITableViewController {
         cell.tag = Int(configuracion.tag)
 
         return cell
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Frecuencia de notificaciones por actividad"
     }
 }

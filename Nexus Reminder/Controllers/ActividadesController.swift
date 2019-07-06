@@ -11,21 +11,22 @@ import CoreData
 import UserNotifications
 import GoogleMobileAds
 
-class ActividadesController: UITableViewController {
+class ActividadesController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addPullDownRefreshToTable()
         bottomView.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        self.tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
 
         actualizarUI()
+        configurarBanner()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         // Actualiza los mensajes de las actividades
-        tableView.reloadData()
+        self.tableView?.reloadData()
         // Notifica a la app cuando la app retornará al foreground
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
@@ -36,6 +37,8 @@ class ActividadesController: UITableViewController {
     }
     // MARK: Variables
     //var actividades: [Actividad] = []
+    var dataTask: URLSessionDataTask?
+    
     lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
         let fetchRequest : NSFetchRequest<NSFetchRequestResult> = Actividad.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "fecha_limite", ascending: true)
@@ -45,11 +48,22 @@ class ActividadesController: UITableViewController {
         return fetchedResultsController
     }()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     // MARK: Outlets
     @IBOutlet weak var bottomView: UIView!
-
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var bannerView: GADBannerView!
+    
     
     // MARK: Funciones
+    // Configuracion necesaria para mostrar el banner de google
+    func configurarBanner() {
+        self.bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        self.bannerView.rootViewController = self
+        let request = GADRequest()
+        request.testDevices = ["91edbaa882c469d367e9322c89e96f6d", "25494902e9a1cc44c9164319aa84bc5c"]
+        self.bannerView.load(request)
+    }
     
     func actualizarUI() {
         guardarActividadesCoreData(datosNexus: GlobalVariables.shared.jsonResponse)
@@ -72,6 +86,7 @@ class ActividadesController: UITableViewController {
         }
     }
     func requestToAPI() {
+        dataTask?.cancel()
         guard
             let matricula = UserDefaults.standard.string(forKey: "matricula"),
             let contrasena = UserDefaults.standard.string(forKey: "contrasena")
@@ -84,8 +99,13 @@ class ActividadesController: UITableViewController {
         url = url.trimmingCharacters(in: .whitespacesAndNewlines)
 //        let url = "https://pastebin.com/raw/B08wxr1d"
         guard let urlRequest = URL(string: url) else { return }
-        let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            if let data = data {
+        
+        let urlSesion = URLSession(configuration: .ephemeral)
+        
+        dataTask = urlSesion.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
+            if let error = error {
+                print("Ocurrió un error con el servidor: \(error.localizedDescription)")
+            } else if let data = data {
                 do {
                     if let respuesta = String(data: data, encoding: .utf8) {
                         // Verifica lo retornado por el servidor
@@ -109,8 +129,35 @@ class ActividadesController: UITableViewController {
                     print("Ocurrio un error al hacer el request: \(error)")
                 }
             }
-        }
-        task.resume()
+        })
+        dataTask?.resume()
+//        let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+//            if let data = data {
+//                do {
+//                    if let respuesta = String(data: data, encoding: .utf8) {
+//                        // Verifica lo retornado por el servidor
+//                        switch respuesta {
+//                        case "0":
+//                            print("No hay materias disponibles")
+//                        case "1":
+//                            print("Matricula o contraseña incorrectas")
+//                        default:
+//                            let json = try JSONSerialization.jsonObject(with: data, options: [])
+//                            if let actividadesUsuario = json as? [[String: Any]] {
+//                                GlobalVariables.shared.jsonResponse = actividadesUsuario
+//                                DispatchQueue.main.async {
+//                                    self.guardarActividadesCoreData(datosNexus: actividadesUsuario)
+//                                    self.tableView.reloadData()
+//                                }
+//                            }
+//                        }
+//                    }
+//                } catch {
+//                    print("Ocurrio un error al hacer el request: \(error)")
+//                }
+//            }
+//        }
+//        task.resume()
     }
     // Se guardan las actividades en el core data y se crean las notificaciones
     func guardarActividadesCoreData(datosNexus: [[String:Any]]) {
@@ -139,6 +186,7 @@ class ActividadesController: UITableViewController {
                             }
                             print(nuevaActividad)
                             Funciones().saveActividad()
+                            print("Actividad guardada correctamente")
                         } else {
                             print("La actividad ya ha sido registrada")
                         }
@@ -158,7 +206,10 @@ class ActividadesController: UITableViewController {
         } catch {
             fatalError("Hubo un error al obtener el listado de las actividades")
         }
-        tableView.reloadData()
+        for section in fetchedResultsController.sections! {
+            print("Seccion \(section): \(section.numberOfObjects) objetos")
+        }
+        self.tableView?.reloadData()
         UNUserNotificationCenter.current().getPendingNotificationRequests { (notifications) in
             print("Contador: \(notifications.count)")
             for notificacion in notifications {
@@ -187,7 +238,7 @@ class ActividadesController: UITableViewController {
     }
     
     // MARK: Funciones del table view
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sections = fetchedResultsController.sections else {
             return 0
         }
@@ -196,24 +247,23 @@ class ActividadesController: UITableViewController {
         return sectionInfo.numberOfObjects
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "actividadesCell", for: indexPath) as! ActividadesCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "actividadesCell", for: indexPath) as! ActividadesCell
         cell.contentView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         
-        let actividad = fetchedResultsController.object(at: indexPath) as! Actividad
-        
+        guard let actividad = fetchedResultsController.object(at: indexPath) as? Actividad else { return cell }
         cell.materiaLabel.text = actividad.materia
         cell.actividadLabel.text = actividad.nombre
         if let fechaLimite = actividad.fecha_limite {
             cell.fechaLimiteLabel.text = convertNexusDateToString(fecha: fechaLimite)
         }
-        
+
         cell.recuerdoDiaLabel.text = Funciones().obtenerMensajeTiempoRestante(fechaActividad: actividad.fecha_limite!)
-        
+
         // Da estilo al recuerdoDiaLabel
         cell.recuerdoDiaLabel.layer.cornerRadius = 5
         cell.recuerdoDiaLabel.layer.masksToBounds = true
@@ -225,31 +275,4 @@ class ActividadesController: UITableViewController {
         
         return cell
     }
-    
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 50
-    }
-    
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let alturaBanner = CGFloat(integerLiteral: 50)
-        let alturaTabBar = CGFloat(integerLiteral: 49)
-        let posicionY = self.view.frame.height - alturaBanner - alturaTabBar
-        let adView: UIView = UIView(frame: CGRect.init(x: 0, y: posicionY, width: self.view.frame.size.width, height: 50))
-        adView.autoresizingMask = UIView.AutoresizingMask.flexibleWidth
-        
-        let bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-        bannerView.rootViewController = self
-        
-        let request = GADRequest()
-        request.testDevices = ["91edbaa882c469d367e9322c89e96f6d", "25494902e9a1cc44c9164319aa84bc5c"]
-        bannerView.load(request)
-        
-        adView.addSubview(bannerView)
-        
-        return adView
-    }
-    
 }

@@ -32,6 +32,7 @@
 		4395A4C922A2F3AF00F65239 /* ActividadesModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4395A4C722A2F3AF00F65239 /* ActividadesModel.xcdatamodeld */; };
 		43B7DBD422BF11E100D186F3 /* ConfiguracionTiempoNotificaciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B7DBD322BF11E100D186F3 /* ConfiguracionTiempoNotificaciones.swift */; };
 		43BB451F22A0E82500EF0E12 /* ActividadesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BB451E22A0E82500EF0E12 /* ActividadesController.swift */; };
+		43C04FD322CF160D00E04A3E /* ConfiguracionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C04FD222CF160D00E04A3E /* ConfiguracionViewController.swift */; };
 		5B04C1ECC76976D438F4EBFB /* Pods_Nexus_Reminder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9462097E8B353E8899817C58 /* Pods_Nexus_Reminder.framework */; };
 		7DFFA9593040BBC671393E96 /* Pods_Nexus_ReminderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A21C6B665578A788F5DC555 /* Pods_Nexus_ReminderTests.framework */; };
 		E20F1E1BE26DF7541D9A48F9 /* Pods_Desarrollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02BB653BC520CDF72FE9CEE /* Pods_Desarrollo.framework */; };
@@ -90,6 +91,7 @@
 		4395A4C822A2F3AF00F65239 /* ActividadesModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ActividadesModel.xcdatamodel; sourceTree = "<group>"; };
 		43B7DBD322BF11E100D186F3 /* ConfiguracionTiempoNotificaciones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguracionTiempoNotificaciones.swift; sourceTree = "<group>"; };
 		43BB451E22A0E82500EF0E12 /* ActividadesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesController.swift; sourceTree = "<group>"; };
+		43C04FD222CF160D00E04A3E /* ConfiguracionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguracionViewController.swift; sourceTree = "<group>"; };
 		5ADD6ADA9BF5F1FA32B2CC02 /* Pods-Nexus Reminder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nexus Reminder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nexus Reminder/Pods-Nexus Reminder.debug.xcconfig"; sourceTree = "<group>"; };
 		63E99E5C39FC2723D53419EC /* Pods-Nexus ReminderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nexus ReminderUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nexus ReminderUITests/Pods-Nexus ReminderUITests.release.xcconfig"; sourceTree = "<group>"; };
 		64143CCD39AC341863AE6201 /* Pods-Nexus ReminderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nexus ReminderTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nexus ReminderTests/Pods-Nexus ReminderTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				43827CF222C1E20C002B2072 /* HeaderView.swift */,
 				434C190822B3313B00864C21 /* TiempoNotificacion.swift */,
 				43B7DBD322BF11E100D186F3 /* ConfiguracionTiempoNotificaciones.swift */,
+				43C04FD222CF160D00E04A3E /* ConfiguracionViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -558,6 +561,7 @@
 			files = (
 				4302335622A2139B00F61C2B /* DesignView.swift in Sources */,
 				43BB451F22A0E82500EF0E12 /* ActividadesController.swift in Sources */,
+				43C04FD322CF160D00E04A3E /* ConfiguracionViewController.swift in Sources */,
 				4362CA61228F6E8E00A70EA1 /* Login.swift in Sources */,
 				4302335E22A228DE00F61C2B /* ConfiguracionController.swift in Sources */,
 				4395A4C922A2F3AF00F65239 /* ActividadesModel.xcdatamodeld in Sources */,

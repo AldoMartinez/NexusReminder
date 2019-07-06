@@ -9,13 +9,15 @@
 import UIKit
 import CoreData
 import UserNotifications
+import GoogleMobileAds
 
-class ConfiguracionTiempoNotificaciones: UITableViewController {
+class ConfiguracionTiempoNotificaciones: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.allowsMultipleSelectionDuringEditing = true
         self.navigationItem.rightBarButtonItem = editButtonItem
         fetchConfiguracion()
+        configurarBanner()
     }
     
     // MARK: Propiedades
@@ -26,6 +28,8 @@ class ConfiguracionTiempoNotificaciones: UITableViewController {
     
     // MARK: Outlets
     @IBOutlet var cancelarButton: UIBarButtonItem!
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var bannerView: GADBannerView!
     
     // MARK: Acciones
     @IBAction func editarButton(_ sender: UIBarButtonItem) {
@@ -36,7 +40,7 @@ class ConfiguracionTiempoNotificaciones: UITableViewController {
             self.dismiss(animated: true, completion: nil)
             Funciones().saveActividad()
         } else {
-            Funciones().createAlerConfirmation(titulo: "¡Cuidado!", mensaje: "Selecciona al menos una opción", controlador: self, option: 1)
+            Funciones().createAlerConfirmation(titulo: "¡Cuidado!", mensaje: "Selecciona al menos una opción", controlador: self, option: 2)
         }
     }
     @IBAction func cancelarButton(_ sender: UIBarButtonItem) {
@@ -45,6 +49,14 @@ class ConfiguracionTiempoNotificaciones: UITableViewController {
     
     
     // MARK: Funciones
+    // Configuracion necesaria para mostrar el banner de google
+    func configurarBanner() {
+        self.bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        self.bannerView.rootViewController = self
+        let request = GADRequest()
+        request.testDevices = ["91edbaa882c469d367e9322c89e96f6d", "25494902e9a1cc44c9164319aa84bc5c"]
+        self.bannerView.load(request)
+    }
     
     // Llena el array de las opciones seleccionadas con los tags
     func guardarUserDefaultsYCoreData(data: [IndexPath]) {
@@ -69,9 +81,9 @@ class ConfiguracionTiempoNotificaciones: UITableViewController {
     func fetchConfiguracion() {
         let request: NSFetchRequest<Configuracion> = Configuracion.fetchRequest()
         request.returnsObjectsAsFaults = true
+        request.sortDescriptors = [NSSortDescriptor(key: "tag", ascending: true)]
         do {
             configuraciones = try context.fetch(request)
-            print(configuraciones)
         } catch {
             print("Error al obtener la configuracion de las notificaciones: \(error)")
         }
@@ -97,29 +109,29 @@ class ConfiguracionTiempoNotificaciones: UITableViewController {
     }
     
     // MARK: Funciones del table view
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let indices = tableView.indexPathsForSelectedRows {
             indexPathsCeldasSeleccionadas = indices
         }
         //configuraciones[indexPath.row].seleccionado = !configuraciones[indexPath.row].seleccionado
     }
     
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if let indices = tableView.indexPathsForSelectedRows {
             indexPathsCeldasSeleccionadas = indices
         }
         //configuraciones[indexPath.row].seleccionado = !configuraciones[indexPath.row].seleccionado
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return configuraciones.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "configuracionCell", for: indexPath)
         
         let configuracion = configuraciones[indexPath.row]
@@ -134,14 +146,14 @@ class ConfiguracionTiempoNotificaciones: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         if tableView.isEditing {
             return true
         }
         return false
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
@@ -160,7 +172,7 @@ class ConfiguracionTiempoNotificaciones: UITableViewController {
                 }
                 self.dismiss(animated: true, completion: nil)
             } else {
-                Funciones().createAlerConfirmation(titulo: "Error", mensaje: "Debes seleccionar al menos una opción", controlador: self, option: 1)
+                Funciones().createAlerConfirmation(titulo: "Error", mensaje: "Debes seleccionar al menos una opción", controlador: self, option: 2)
             }
         }
     }

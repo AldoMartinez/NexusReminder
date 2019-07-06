@@ -14,7 +14,7 @@ import GoogleMobileAds
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var dataTask: URLSessionDataTask?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Si el usuario esta logeado, lo mando a la pantalla de actividades
@@ -31,8 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         sleep(2)
         
-        // Trae datos del servidor cada minuto
-        UIApplication.shared.setMinimumBackgroundFetchInterval(10)
+        // Trae datos del servidor cada 12 horas (estimado)
+        UIApplication.shared.setMinimumBackgroundFetchInterval(43200)
         
         // Google Ads
         GADMobileAds.sharedInstance().start(completionHandler: nil)
@@ -41,40 +41,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        let newData: [[String: Any]] = [
-            [
-                "materia" : "Estructura de datos",
-                "actividades_pendientes" : [
-                    [
-                        "tarea" : "Actividad fundamental 7",
-                        "fecha_limite" : "junio 25, 17:20 hrs."
-                    ]
-                ]
-            ]
-        ]
+        dataTask?.cancel()
+//        let newData: [[String: Any]] = [
+//            [
+//                "materia" : "Estructura de datos",
+//                "actividades_pendientes" : [
+//                    [
+//                        "tarea" : "Actividad fundamental 7",
+//                        "fecha_limite" : "Julio 25, 17:20 hrs."
+//                    ]
+//                ]
+//            ]
+//        ]
         if UserDefaults.standard.bool(forKey: "userLogin") {
             NSLog("user login true", "")
             // Ejecuta el request al servidor
             let st = UIStoryboard(name: "Main", bundle: nil)
             if let vc = st.instantiateViewController(withIdentifier: "ActividadesController") as? ActividadesController {
                 NSLog("vc creado", "")
-//                guard
-//                    let matricula = UserDefaults.standard.string(forKey: "matricula"),
-//                    let contrasena = UserDefaults.standard.string(forKey: "contrasena")
-//                    else {
-//                        return
-//                }
-//                NSLog("matricula y contraseñas creadas", "")
-//                let base = "http://18.191.89.218/nexusApi/"
-//                let separador = "nexusApiAldo"
-//                var url = base + matricula + separador + contrasena
-//                url = url.trimmingCharacters(in: .whitespacesAndNewlines)
-//                guard let urlRequest = URL(string: url) else { return }
-//                print(urlRequest)
-                var url = "https://pastebin.com/raw/B08wxr1d"
-                let urlRequest = URL(string: url)
-                URLSession.shared.dataTask(with: urlRequest!) { (data, response, error) in
-                    NSLog("URLSesion creada", "")
+                guard
+                    let matricula = UserDefaults.standard.string(forKey: "matricula"),
+                    let contrasena = UserDefaults.standard.string(forKey: "contrasena")
+                    else {
+                        return
+                }
+                NSLog("matricula y contraseñas creadas", "")
+                let base = "http://18.191.89.218/nexusApi/"
+                let separador = "nexusApiAldo"
+                var url = base + matricula + separador + contrasena
+                url = url.trimmingCharacters(in: .whitespacesAndNewlines)
+                guard let urlRequest = URL(string: url) else { return }
+                print(urlRequest)
+                //var url = "https://pastebin.com/raw/B08wxr1d"
+                //let urlRequest = URL(string: url)
+                let urlSesion = URLSession(configuration: .ephemeral)
+                
+                self.dataTask = urlSesion.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
                     guard let data = data, error == nil else {
                         completionHandler(.failed)
                         return
@@ -85,17 +87,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             // Verifica lo retornado por el servidor
                             switch respuesta {
                             case "0":
+                                print("No hay materias disponibles")
                                 break
-                                //print("No hay materias disponibles")
                             case "1":
+                                print("Matricula o contraseña incorrectas")
                                 break
-                                //print("Matricula o contraseña incorrectas")
                             default:
                                 NSLog("json actualizado", "done")
                                 let json = try JSONSerialization.jsonObject(with: data, options: [])
                                 if let actividadesUsuario = json as? [[String: Any]] {
                                     DispatchQueue.main.async {
-                                        GlobalVariables.shared.jsonResponse = newData
+//                                        GlobalVariables.shared.jsonResponse = newData // Configuracion para probar backgroundfetch
+                                        GlobalVariables.shared.jsonResponse = actividadesUsuario
                                         vc.actualizarUI()
                                         completionHandler(.newData)
                                     }
@@ -107,11 +110,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         print("Ocurrio un error al hacer el request: \(error)")
                         completionHandler(.noData)
                     }
-                }.resume()
+                })
+                dataTask?.resume()
+//                urlSesion.dataTask(with: urlRequest!) { (data, response, error) in
+//                    NSLog("URLSesion creada", "")
+//                    guard let data = data, error == nil else {
+//                        completionHandler(.failed)
+//                        return
+//                    }
+//                    do {
+//
+//                        if let respuesta = String(data: data, encoding: .utf8) {
+//                            // Verifica lo retornado por el servidor
+//                            switch respuesta {
+//                            case "0":
+//                                break
+//                                //print("No hay materias disponibles")
+//                            case "1":
+//                                break
+//                                //print("Matricula o contraseña incorrectas")
+//                            default:
+//                                NSLog("json actualizado", "done")
+//                                let json = try JSONSerialization.jsonObject(with: data, options: [])
+//                                if let actividadesUsuario = json as? [[String: Any]] {
+//                                    DispatchQueue.main.async {
+//                                        GlobalVariables.shared.jsonResponse = newData
+//                                        vc.actualizarUI()
+//                                        completionHandler(.newData)
+//                                    }
+//
+//                                }
+//                            }
+//                        }
+//                    } catch {
+//                        print("Ocurrio un error al hacer el request: \(error)")
+//                        completionHandler(.noData)
+//                    }
+//                }.resume()
             } else {
                 NSLog("Error al crear actividades controller", "")
             }
-        } else {
+        } else {
             NSLog("El usuario no ha iniciado sesión", "")
         }
     }

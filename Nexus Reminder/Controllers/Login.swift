@@ -35,16 +35,6 @@ class ViewController: UIViewController, UITextFieldDelegate, GADBannerViewDelega
         self.bannerView.load(request)
     }
     
-    // MARK: Configuracion del Google Banner
-//    func addBannerViewToView(_ bannerView: GADBannerView) {
-//        bannerView.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(bannerView)
-//        view.addConstraints([
-//            NSLayoutConstraint(item: bannerView, attribute: .bottom, relatedBy: .equal, toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0),
-//            NSLayoutConstraint(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
-//            ])
-//    }
-    
     func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
         print("Error con el banner: \(error.localizedDescription)")
     }
@@ -65,7 +55,7 @@ class ViewController: UIViewController, UITextFieldDelegate, GADBannerViewDelega
     }
     // MARK: Properties
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
+    var dataTask: URLSessionDataTask?
     
     // MARK: Outlets
     @IBOutlet weak var matriculaTextField: UITextField!
@@ -92,8 +82,8 @@ class ViewController: UIViewController, UITextFieldDelegate, GADBannerViewDelega
     }
     // Funcion que hace el request a la API
     func obtenerActividades(matricula: String, contrasena: String) {
-        var statusCode: Int = 3
-        
+        var statusCode: Int = 2
+        dataTask?.cancel()
         let base = "http://18.191.89.218/nexusApi/"
         let separador = "nexusApiAldo"
         var url = base + matricula + separador + contrasena
@@ -106,22 +96,24 @@ class ViewController: UIViewController, UITextFieldDelegate, GADBannerViewDelega
             self.resetInputFields()
             return
         }
-
-        let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-
+        let urlSesion = URLSession(configuration: .ephemeral)
+        dataTask = urlSesion.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
             if let data = data {
                 do {
                     if let respuesta = String(data: data, encoding: .utf8) {
+                        print(respuesta)
                         // Verifica lo retornado por el servidor
                         switch respuesta {
                         case "0":
+                            statusCode = 0
                             print("No hay materias disponibles")
                         case "1":
                             print("Matricula o contraseña incorrectas")
                             statusCode = 1
                         default:
+                            statusCode = 0
                             let json = try JSONSerialization.jsonObject(with: data, options: [])
-
+                            
                             if let actividadesUsuario = json as? [[String: Any]] {
                                 GlobalVariables.shared.jsonResponse = actividadesUsuario
                                 print(GlobalVariables.shared.jsonResponse)
@@ -130,18 +122,53 @@ class ViewController: UIViewController, UITextFieldDelegate, GADBannerViewDelega
                     }
                 } catch {
                     print(error)
-                    statusCode = 1
+                    statusCode = 2
                 }
             }
             self.validarRequest(status: statusCode)
-        }
-        task.resume()
+        })
+        dataTask?.resume()
+//        let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+//
+//            if let data = data {
+//                do {
+//                    if let respuesta = String(data: data, encoding: .utf8) {
+//                        print(respuesta)
+//                        // Verifica lo retornado por el servidor
+//                        switch respuesta {
+//                        case "0":
+//                            print("No hay materias disponibles")
+//                        case "1":
+//                            print("Matricula o contraseña incorrectas")
+//                            statusCode = 1
+//                        default:
+//                            let json = try JSONSerialization.jsonObject(with: data, options: [])
+//
+//                            if let actividadesUsuario = json as? [[String: Any]] {
+//                                GlobalVariables.shared.jsonResponse = actividadesUsuario
+//                                print(GlobalVariables.shared.jsonResponse)
+//                            }
+//                        }
+//                    }
+//                } catch {
+//                    print(error)
+//                    statusCode = 2
+//                }
+//            }
+//            self.validarRequest(status: statusCode)
+//        }
+//        task.resume()
     }
     
     // Funcion que valida el login, si es correcto, lo manda al controllador de actividades (default)
     func validarRequest(status: Int) {
         DispatchQueue.main.async {
             switch status {
+            case 0:
+                self.performSegue(withIdentifier: "loginSegue", sender: self)
+                UserDefaults.standard.set(true, forKey: "userLogin")
+                UserDefaults.standard.set(self.matriculaTextField.text, forKey: "matricula")
+                UserDefaults.standard.set(self.contrasenaTextField.text, forKey: "contrasena")
             case 1:
                 print("Matricula o contraseña incorrectas")
                 Funciones().createAlerConfirmation(titulo: "Datos incorrectos", mensaje: "La matrícula o contraseña no coinciden", controlador: self, option: 2)
@@ -150,10 +177,7 @@ class ViewController: UIViewController, UITextFieldDelegate, GADBannerViewDelega
                 print("Error")
                 Funciones().createAlerConfirmation(titulo: "Error", mensaje: "Ocurrió un error desconocido", controlador: self, option: 2)
             default:
-                self.performSegue(withIdentifier: "loginSegue", sender: self)
-                UserDefaults.standard.set(true, forKey: "userLogin")
-                UserDefaults.standard.set(self.matriculaTextField.text, forKey: "matricula")
-                UserDefaults.standard.set(self.contrasenaTextField.text, forKey: "contrasena")
+                break
             }
         }
         
