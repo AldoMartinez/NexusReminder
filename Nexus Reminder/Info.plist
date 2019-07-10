@@ -19,7 +19,9 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-7085445531562253~3747781629</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -52,7 +54,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>GADApplicationIdentifier</key>
-    <string>ca-app-pub-7085445531562253~3747781629</string>
 </dict>
 </plist>
