@@ -1,6 +1,0 @@
-framework module Pods_Desarrollo {
-  umbrella header "Pods-Desarrollo-umbrella.h"
-
-  export *
-  module * { export * }
-}

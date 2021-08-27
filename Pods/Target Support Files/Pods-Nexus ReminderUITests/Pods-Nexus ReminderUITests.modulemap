@@ -1,6 +1,0 @@
-framework module Pods_Nexus_ReminderUITests {
-  umbrella header "Pods-Nexus ReminderUITests-umbrella.h"
-
-  export *
-  module * { export * }
-}

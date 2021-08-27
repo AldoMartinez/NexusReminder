@@ -9,10 +9,15 @@ hr{
 .text-muted.politica{
   text-align: justify;
   white-space: pre-wrap;
+  width: 100%;
 }
 h2.titulo {
   font-size: 40px;
 }
 section.features .section-heading {
     margin-bottom: 50px;
+}
+
+ul {
+  width: 100%;
 }
