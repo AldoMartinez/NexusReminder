@@ -1,46 +1,56 @@
-## Nexus Reminder
+# Nexus Reminder – Never Miss a Nexus Assignment Deadline
 
-Nexus Reminder es una aplicación que te recuerda tus actividades pendientes de la plataforma Nexus, la cual es usada en la Universidad Autónoma de Nuevo León.
+**Get notified before your Nexus activities are due — one day and one hour in advance.**
 
-## Preview
+## Overview
+**Nexus Reminder** is a cross-platform mobile app that helps you stay on top of your pending activities from the Nexus platform. It sends timely reminders so you can submit your work before the deadline.  
+Simply log in with your **SIASE** account to start receiving reminders and managing your upcoming tasks.
 
-[![Nexus Reminder preview](https://github.com/AldoMartinez/NexusReminder/blob/master/docs/img/nexusReminderLandPage.PNG)](https://aldomireles.me/NexusReminder/)
+Available on both **iOS** and **Android**.
 
-**[View Live Preview](http://aldomireles.me/NexusReminder/)**
+## Features
+- **Deadline Notifications** – Receive reminders one day and one hour before your Nexus activity due dates.
+- **SIASE Login** – Securely access your account with your SIASE credentials.
+- **Activity List** – View all your upcoming assignments in one place.
+- **Notification Settings** – Customize when and how you get notified.
+- **SIASE Information Access** – Check your academic information including enrolled programs, Kardex, and schedules.
 
-## Download and Installation
+## Who Is It For?
+- Students using the **Nexus** platform.
+- Anyone who wants an easy way to track and manage academic deadlines.
+- Users who want a centralized place to check their academic data.
 
-To begin using this template, choose one of the following options to get started:
-* [Download the latest release on Start Bootstrap](https://startbootstrap.com/template-overviews/new-age/)
-* Install via npm: `npm i startbootstrap-new-age`
-* Clone the repo: `git clone https://github.com/BlackrockDigital/startbootstrap-new-age.git`
-* [Fork, Clone, or Download on GitHub](https://github.com/BlackrockDigital/startbootstrap-new-age)
+## API
+Nexus Reminder uses a **custom API** developed specifically for the app.  
+This API:
+- Retrieves academic and activity data from the **SIASE** platform
+- Makes the data available to the mobile app in a clean, structured format
+- Is built using **Python** with:
+  - **Flask** for the web framework
+  - **BeautifulSoup** for HTML parsing and data extraction
 
-## Uso
+By offloading data scraping and formatting to the API, the mobile app can remain fast, lightweight, and focused on user experience.
 
-### Uso básico
+## Technologies Used
+### iOS
+- **Language:** Swift, SwiftUI
+- **Notifications:** UserNotifications Framework
+- **API Communication:** URLSession
 
-Ingresar sesión con la cuenta siase, configurar las notificaciones por actividad y listo.
+### Android
+- **Framework:** Ionic
+- **Frontend:** Angular + TypeScript
+- **Notifications:** Firebase Cloud Messaging
 
-## Bugs and Issues
+## Screenshots
+<img width="1000"  alt="Nexus Reminder Banner" src="https://github.com/user-attachments/assets/87d85445-781a-4fcf-84cf-1de23f0b6f02" />
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/BlackrockDigital/startbootstrap-new-age/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/new-age/).
+## Requirements
+- Active **SIASE** account
 
-## About
+## Installation
+Nexus Reminder is available on both the **App Store** and **Google Play**:
 
-Start Bootstrap is an open source library of free Bootstrap templates and themes. All of the free templates and themes on Start Bootstrap are released under the MIT license, which means you can use them for any purpose, even for commercial projects.
+- [Download on the App Store](https://apps.apple.com/us/app/nexus-reminder/id1537701396) 
+- [Get it on Google Play](https://play.google.com/store/apps/details?id=com.aldomartinez.nexusreminder&hl=en_US)
 
-* https://startbootstrap.com
-* https://twitter.com/SBootstrap
-
-Start Bootstrap was created by and is maintained by **[David Miller](http://davidmiller.io/)**, Owner of [Blackrock Digital](http://blackrockdigital.io/).
-
-* http://davidmiller.io
-* https://twitter.com/davidmillerskt
-* https://github.com/davidtmiller
-
-Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
-
-## Copyright and License
-
-Copyright 2013-2019 Nexus Reminder.
